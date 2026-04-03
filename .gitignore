@@ -99,3 +99,6 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+lib
+/lib
