@@ -1,11 +1,12 @@
-import { Account, Client, Databases } from "react-native-appwrite";
+import { Account, Client, Databases } from "appwrite";
+import Constants from "expo-constants";
 
 const client = new Client();
+const {appwriteEndpoint, appwriteProjectId} = Constants.expoConfig?.extra || {};
 
 client
-.setEndpoint(process.env.EXPO_PUBLIC_ENDPOINT)
-.setProject(process.env.EXPO_PUBLIC_PROJECT_ID)
-.setPlatform(process.env.EXPO_PUBLIC_PLATFORM)
+.setEndpoint(appwriteEndpoint)
+.setProject(appwriteProjectId)
 
 export const account = new Account(client);
 export const databases = new Databases(client);
