@@ -1,6 +1,6 @@
+import { account } from "@/lib/appwrite"; // wherever you initialized Appwrite
 import * as Linking from "expo-linking";
 import { useEffect } from "react";
-import { account } from "../../lib/appwrite"; // wherever you initialized Appwrite
 
 export default function AuthCallback() {
   const url = Linking.useURL();
