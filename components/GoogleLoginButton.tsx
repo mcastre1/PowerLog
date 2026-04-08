@@ -4,10 +4,7 @@ import { Pressable, Text } from "react-native";
 
 export default function GoogleLoginButton() {
   const handleGoogleLogin = async () => {
-    const redirectUrl = Linking.createURL("/auth/callback");
-
-    console.log("Redirect URL:", Linking.createURL("/auth/callback"));
-
+    const redirectUrl = Linking.createURL("auth/callback");
 
     try {
       await account.createOAuth2Session(
@@ -15,6 +12,7 @@ export default function GoogleLoginButton() {
         redirectUrl,
         redirectUrl
       );
+      console.log("got here");
     } catch (err) {
       console.log("OAuth error:", err);
     }
@@ -31,7 +29,7 @@ export default function GoogleLoginButton() {
       }}
     >
       <Text style={{ color: "white", fontWeight: "600" }}>
-        Sign in with Googlea
+        Sign in with Google
       </Text>
     </Pressable>
   );

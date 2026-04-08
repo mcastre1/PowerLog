@@ -51,7 +51,7 @@
       "eas": {
         "projectId": "aa21bf83-dbb8-45e2-9c68-7ae8d6fcac63"
       },
-      "appwriteEndpoint": "https://cloud.appwrite.io/v1",
+      "appwriteEndpoint": "https://sfo.cloud.appwrite.io/v1",
       "appwriteProjectId": "69cc81a700153c15bae4"
     }
   }
