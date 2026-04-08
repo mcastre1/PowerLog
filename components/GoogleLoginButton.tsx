@@ -6,6 +6,9 @@ export default function GoogleLoginButton() {
   const handleGoogleLogin = async () => {
     const redirectUrl = Linking.createURL("/auth/callback");
 
+    console.log("Redirect URL:", Linking.createURL("/auth/callback"));
+
+
     try {
       await account.createOAuth2Session(
         "google",
@@ -28,7 +31,7 @@ export default function GoogleLoginButton() {
       }}
     >
       <Text style={{ color: "white", fontWeight: "600" }}>
-        Sign in with Google
+        Sign in with Googlea
       </Text>
     </Pressable>
   );
