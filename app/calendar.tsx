@@ -1,5 +1,5 @@
-import { Text } from 'react-native';
+import WorkoutCalendar from '@/components/WorkoutCalendar';
 
 export default function Calendar() {
-  return (<Text>Calendar Page</Text>);
+  return (<WorkoutCalendar/>);
 }
