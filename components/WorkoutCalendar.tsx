@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 import { CalendarList } from "react-native-calendars";
@@ -10,6 +11,7 @@ export default function WorkoutCalendar() {
             <CalendarList
                 onDayPress={(day) => {
                     setSelectedDate(day.dateString);
+                    router.push("/(modals)/editWorkout");
                 }}
                 markedDates={{
                     [selectedDate]: {selected: true, selectedColor: "#4CAF50"}
