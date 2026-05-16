@@ -1,21 +1,28 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
 
-export default function AddWorkoutSectionButton (){
+export default function AddWorkoutSectionButton() {
     return (
         <>
-        <View style={styles.container}>
-            <Pressable style={styles.button}>
-                <AntDesign name="plus" size={28} color="white"/>
-            </Pressable>
-        </View>
+            <View style={styles.container}>
+                <Pressable style={({ pressed }) => [
+                    styles.button,
+                    { opacity: pressed ? 0.5 : 1 }
+                ]} onPress={handlePress}>
+                    <AntDesign name="plus" size={28} color="white" />
+                </Pressable>
+            </View>
         </>
     )
 }
 
+function handlePress() {
+    console.log("button");
+}
+
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
         padding: 20,
@@ -26,7 +33,7 @@ const styles = StyleSheet.create({
         borderColor: "#B8B7B7",
         borderWidth: 2,
     },
-    button:{
+    button: {
         width: 60,
         height: 60,
         borderRadius: 999,
@@ -36,7 +43,7 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOpacity: 0.25,
         shadowRadius: 6,
-        shadowOffset: {width: 0, height: 3},
+        shadowOffset: { width: 0, height: 3 },
         elevation: 5,
     },
 })
