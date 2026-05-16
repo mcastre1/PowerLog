@@ -9,7 +9,7 @@ export default function RootLayout() {
     return (
         <>
             <SafeAreaProvider>
-                <SafeAreaView style={{ flex: 1,  backgroundColor: theme === "dark" ? "#000" : "#fff"}}>
+                <SafeAreaView style={{ flex: 1, backgroundColor: theme === "dark" ? "#000" : "#fff" }}>
                     <StatusBar
                         style={theme === "dark" ? "light" : "dark"}
                         backgroundColor="transparent" />

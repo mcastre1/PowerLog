@@ -35,7 +35,7 @@ export default function TabsLayout() {
 
 
 const styles = StyleSheet.create({
-  tabBarLabel: {
+  tabBarLabel: {         // Style to use default react native font styling.
     fontSize: 12,        // default
     fontWeight: "500",   // default
     fontFamily: undefined // lets iOS/Android pick system font
