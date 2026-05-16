@@ -1,12 +1,14 @@
-import AddWorkoutSectionButton from '@/components/AddWorkoutSectionButton';
+import AddExerciseSectionButton from '@/components/AddExerciseSectionButton';
+import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 
-
 export default function EditWorkout() {
+    const [exercises, setExercises] = useState<any[]>([]);
+
     return (
         <ScrollView style={styles.container}>
-            <AddWorkoutSectionButton/>
+            <AddExerciseSectionButton/>
         </ScrollView>
     )
 }
