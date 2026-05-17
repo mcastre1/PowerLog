@@ -12,10 +12,10 @@ type Exercise = {
 type Set = {
     reps: number;
     weight: number;
-}
+};
 
 export default function EditWorkout() {
-    const [exercises, setExercises] = useState<any[]>([]);
+    const [exercises, setExercises] = useState<Exercise[]>([]);
 
     return (
         <ScrollView style={styles.container}>
