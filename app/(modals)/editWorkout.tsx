@@ -3,6 +3,17 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 
+type Exercise = {
+    section: string;
+    name: string;
+    sets: Set[];
+};
+
+type Set = {
+    reps: number;
+    weight: number;
+}
+
 export default function EditWorkout() {
     const [exercises, setExercises] = useState<any[]>([]);
 
