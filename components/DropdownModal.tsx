@@ -48,7 +48,7 @@ export default function DropdownModal() {
 const styles = StyleSheet.create({
     button: {
         padding: 3,
-        borderRadius: 8,
+        borderRadius: 2,
         borderWidth: 1,
         borderColor: "#B8B7B7"
     },

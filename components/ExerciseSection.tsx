@@ -1,6 +1,6 @@
 import { bodySection } from "@/src/constants/exercises";
 import { useState } from "react";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import DropdownModal from "./DropdownModal";
 
 
@@ -9,11 +9,8 @@ export default function ExerciseSection() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.leftColumn}>
+            <View style={styles.sectionHeader}>
                 <DropdownModal/>
-            </View>
-            <View style={styles.rightColumn}>
-                <Text>test2</Text>
             </View>
         </View>
     );
@@ -22,12 +19,14 @@ export default function ExerciseSection() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "column",
     },
-    leftColumn: {
+    sectionHeader: {
         flex: 1,
+        flexDirection: "row",
+        gap: 20,
+        padding:20,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    rightColumn: {
-        flex: 2,
-    }
 });
