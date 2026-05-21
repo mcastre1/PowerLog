@@ -93,6 +93,3 @@ export const upperBodyExercises = {
     "Dumbbell Kickback"
   ]
 } as const;
-
-
-export type BodySection = typeof bodySection[number];

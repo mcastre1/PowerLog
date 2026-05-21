@@ -4,9 +4,10 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 const sectionList = ["Upper Body", "Lower Body"]
 type Props = {
     callBack: (value: string) => void;
+    data: string;
 }
 
-export default function DropdownModal({callBack}: Props) {
+export default function DropdownModal({callBack, data}: Props) {
     const [selected, setSelected] = useState("Upper Body");
     const [open, setOpen] = useState(false);
 
