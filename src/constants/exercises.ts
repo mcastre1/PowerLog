@@ -1,6 +1,6 @@
 export const bodySection = [
-    { name: "Upper Body" },
-    { name: "Lower Body" },
+    "Upper Body",
+    "Lower Body"
 ] as const;
 
 export const lowerBodyExercises = {
@@ -93,3 +93,6 @@ export const upperBodyExercises = {
     "Dumbbell Kickback"
   ]
 } as const;
+
+
+export type BodySection = typeof bodySection[number];

@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 
 const sectionList = ["Upper Body", "Lower Body"]
+type Props = {
+    callBack: (value: string) => void;
+}
 
-
-export default function DropdownModal() {
+export default function DropdownModal({callBack}: Props) {
     const [selected, setSelected] = useState("Upper Body");
     const [open, setOpen] = useState(false);
 
@@ -33,7 +35,9 @@ export default function DropdownModal() {
                                 android_ripple={{ color: "#e0e0e0"}}
                                 onPress={() => {
                                     setSelected(s);
+                                    callBack(s);
                                     setOpen(false);
+                                    
                                 }}>
                                 <Text style={styles.itemText}>{s}</Text>
                             </Pressable>

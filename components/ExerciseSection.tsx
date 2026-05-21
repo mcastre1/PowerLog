@@ -1,16 +1,29 @@
-import { bodySection } from "@/src/constants/exercises";
-import { useState } from "react";
+import { BodySection, bodySection } from "@/src/constants/exercises";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from 'react-native';
 import DropdownModal from "./DropdownModal";
 
 
 export default function ExerciseSection() {
-    const [selectedSection, setSelectedSection] = useState(bodySection[0]);
+    const [selectedSection, setSelectedSection] = useState<BodySection>(bodySection[0]);
+    
+    const handleSectionSelection = ((value: string) => {
+        if (value === "Lower Body"){
+            setSelectedSection(bodySection[1]);
+
+        } else if (value === "Upper Body"){
+            setSelectedSection(bodySection[0]);
+        }
+    });
+
+    useEffect(()=> {
+        console.log("Uptaded section: ", selectedSection);
+    }, [selectedSection]);
 
     return (
         <View style={styles.container}>
             <View style={styles.sectionHeader}>
-                <DropdownModal/>
+                <DropdownModal callBack={handleSectionSelection}/>
             </View>
         </View>
     );
