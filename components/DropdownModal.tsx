@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 
-const sectionList = ["Upper Body", "Lower Body"]
 type Props = {
     callBack: (value: string) => void;
     data: string;
+    type: string;
+    list?: Record<string, readonly string[]>
 }
 
-export default function DropdownModal({callBack, data}: Props) {
-    const [selected, setSelected] = useState("Upper Body");
+export default function DropdownModal({callBack, data, type, list}: Props) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -20,7 +20,7 @@ export default function DropdownModal({callBack, data}: Props) {
             android_ripple={{color: "#ddd"}} // Android ripple 
             
             onPress={() => setOpen(true)}>
-                <Text style={styles.buttonText}> {selected} </Text>
+                <Text style={styles.buttonText}> {data} </Text>
             </Pressable>
 
             <Modal visible={open} transparent animationType="fade">
@@ -35,7 +35,6 @@ export default function DropdownModal({callBack, data}: Props) {
                                 ]}
                                 android_ripple={{ color: "#e0e0e0"}}
                                 onPress={() => {
-                                    setSelected(s);
                                     callBack(s);
                                     setOpen(false);
                                     
