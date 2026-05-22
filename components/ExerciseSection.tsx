@@ -16,10 +16,13 @@ export default function ExerciseSection() {
         switch(selectedSection){
             case 'Upper Body':
                 setExerciseList(upperBodyExercises);
-                upperBodyExercises.chest[0]
+                setSelectedExercise(upperBodyExercises.chest[0]);
+                break;
+                
             case 'Lower Body':
                 setExerciseList(lowerBodyExercises);
                 setSelectedExercise(lowerBodyExercises.quads[0]);
+                break;
         }
     }, [selectedSection]);
 

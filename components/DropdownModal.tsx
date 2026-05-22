@@ -1,3 +1,4 @@
+import { bodySection } from "@/src/constants/exercises";
 import { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -10,6 +11,7 @@ type Props = {
 
 export default function DropdownModal({callBack, data, type, list}: Props) {
     const [open, setOpen] = useState(false);
+    const sectionList = bodySection;
 
     return (
         <>
