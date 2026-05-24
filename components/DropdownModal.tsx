@@ -9,7 +9,7 @@ type Props = {
     list?: Record<string, readonly string[]>
 }
 
-export default function DropdownModal({callBack, data, type, list}: Props) {
+export default function DropdownModal({ callBack, data, type, list }: Props) {
     const [open, setOpen] = useState(false);
     const sectionList = bodySection;
 
@@ -19,31 +19,56 @@ export default function DropdownModal({callBack, data, type, list}: Props) {
                 styles.button,
                 pressed && { opacity: 0.6 } // iOS feedback
             ]}
-            android_ripple={{color: "#ddd"}} // Android ripple 
-            
-            onPress={() => setOpen(true)}>
+                android_ripple={{ color: "#ddd" }} // Android ripple 
+
+                onPress={() => setOpen(true)}>
                 <Text style={styles.buttonText}> {data} </Text>
             </Pressable>
 
             <Modal visible={open} transparent animationType="fade">
                 <Pressable style={styles.overlay} onPress={() => setOpen(false)}>
                     <View style={styles.menu}>
-                        {sectionList.map((s) => (
-                            <Pressable
-                                key={s}
-                                style={({pressed})=>[
-                                    styles.item,
-                                    pressed && { backgroundColor : "#f0f0f0"} // feedback
-                                ]}
-                                android_ripple={{ color: "#e0e0e0"}}
-                                onPress={() => {
-                                    callBack(s);
-                                    setOpen(false);
-                                    
-                                }}>
-                                <Text style={styles.itemText}>{s}</Text>
-                            </Pressable>
-                        ))}
+                        {list ?
+                            (
+                                Object.keys(list).map((section) => (
+                                    <>
+                                        <Text key={section}>{section}</Text>
+                                        {list[section].map((exercise) => (
+                                            <Pressable
+                                                key={exercise}
+                                                style={({ pressed }) => [
+                                                    styles.item,
+                                                    pressed && { backgroundColor: "#f0f0f0" } // feedback
+                                                ]}
+                                                android_ripple={{ color: "#e0e0e0" }}
+                                                onPress={() => {
+                                                    callBack(exercise);
+                                                    setOpen(false);
+
+                                                }}>
+                                                <Text key={section+exercise}style={styles.itemText}>{exercise}</Text>
+                                            </Pressable>
+                                        ))}
+                                    </>
+                                ))
+                            )
+                            :
+                            (sectionList.map((s) => (
+                                <Pressable
+                                    key={s}
+                                    style={({ pressed }) => [
+                                        styles.item,
+                                        pressed && { backgroundColor: "#f0f0f0" } // feedback
+                                    ]}
+                                    android_ripple={{ color: "#e0e0e0" }}
+                                    onPress={() => {
+                                        callBack(s);
+                                        setOpen(false);
+
+                                    }}>
+                                    <Text style={styles.itemText}>{s}</Text>
+                                </Pressable>
+                            )))}
                     </View>
                 </Pressable>
             </Modal>

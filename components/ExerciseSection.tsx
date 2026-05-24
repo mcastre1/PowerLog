@@ -26,6 +26,7 @@ export default function ExerciseSection() {
         }
     }, [selectedSection]);
 
+    // UI
     return (
         <View style={styles.container}>
             <View style={styles.sectionHeader}>
