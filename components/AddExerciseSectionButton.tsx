@@ -1,23 +1,23 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
 
-export default function AddExerciseSectionButton() {
+type Props = {
+    callBack: () => void;
+}
+
+export default function AddExerciseSectionButton({callBack} : Props) {
     return (
         <>
             <View style={styles.container}>
                 <Pressable style={({ pressed }) => [
                     styles.button,
                     { opacity: pressed ? 0.5 : 1 }
-                ]} onPress={handleButton}>
+                ]} onPress={callBack}>
                     <AntDesign name="plus" size={28} color="white" />
                 </Pressable>
             </View>
         </>
     )
-}
-
-function handleButton(){
-    console.log("button pressed");
 }
 
 

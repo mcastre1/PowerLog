@@ -30,12 +30,12 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
                     <View style={styles.menu}>
                         {list ? (
                             <FlatList
-                                data={Object.entries(list)} // [["chest", ["Bench Press"]], ["back", ["Rows"]]]
+                                data={Object.entries(list)}
                                 renderItem={({ item }) => {
                                     const [section, exercises] = item;
                                     return (
-                                        <View>
-                                            <Text>{section}</Text>
+                                        <View style={{alignItems:"center"}}>
+                                            <Text style={styles.itemText}>--- {section} ---</Text>
                                             {exercises.map(ex => <Pressable
                                                 key={ex}
                                                 style={({ pressed }) => [
