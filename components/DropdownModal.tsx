@@ -1,6 +1,6 @@
 import { bodySection } from "@/src/constants/exercises";
 import { useState } from "react";
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 
 type Props = {
     callBack: (value: string) => void;
@@ -28,53 +28,98 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
             <Modal visible={open} transparent animationType="fade">
                 <Pressable style={styles.overlay} onPress={() => setOpen(false)}>
                     <View style={styles.menu}>
-                        {list ?
-                            (
-                                Object.keys(list).map((section) => (
-                                    <>
-                                        <Text key={section}>{section}</Text>
-                                        {list[section].map((exercise) => (
-                                            <Pressable
-                                                key={exercise}
+                        {list ? (
+                            <FlatList
+                                data={Object.entries(list)} // [["chest", ["Bench Press"]], ["back", ["Rows"]]]
+                                renderItem={({ item }) => {
+                                    const [section, exercises] = item;
+                                    return (
+                                        <View>
+                                            <Text>{section}</Text>
+                                            {exercises.map(ex => <Pressable
+                                                key={ex}
                                                 style={({ pressed }) => [
                                                     styles.item,
-                                                    pressed && { backgroundColor: "#f0f0f0" } // feedback
+                                                    pressed && { backgroundColor: "#f0f0f0" }
                                                 ]}
                                                 android_ripple={{ color: "#e0e0e0" }}
                                                 onPress={() => {
-                                                    callBack(exercise);
+                                                    callBack(ex);
                                                     setOpen(false);
-
-                                                }}>
-                                                <Text key={section+exercise}style={styles.itemText}>{exercise}</Text>
-                                            </Pressable>
-                                        ))}
-                                    </>
-                                ))
-                            )
-                            :
-                            (sectionList.map((s) => (
+                                                }}
+                                            >
+                                                <Text style={styles.itemText}>{ex}</Text>
+                                            </Pressable>)}
+                                        </View>
+                                    );
+                                }}
+                            />
+                        ) : (
+                            sectionList.map((s) => (
                                 <Pressable
                                     key={s}
                                     style={({ pressed }) => [
                                         styles.item,
-                                        pressed && { backgroundColor: "#f0f0f0" } // feedback
+                                        pressed && { backgroundColor: "#f0f0f0" }
                                     ]}
                                     android_ripple={{ color: "#e0e0e0" }}
                                     onPress={() => {
                                         callBack(s);
                                         setOpen(false);
-
-                                    }}>
+                                    }}
+                                >
                                     <Text style={styles.itemText}>{s}</Text>
                                 </Pressable>
-                            )))}
+                            ))
+                        )}
                     </View>
                 </Pressable>
             </Modal>
         </>
     );
 }
+
+// {list ?
+//                             (
+//                                 Object.keys(list).map((section) => (
+//                                     <>
+//                                         <Text key={section}>{section}</Text>
+//                                         {list[section].map((exercise) => (
+//                                             <Pressable
+//                                                 key={exercise}
+//                                                 style={({ pressed }) => [
+//                                                     styles.item,
+//                                                     pressed && { backgroundColor: "#f0f0f0" } // feedback
+//                                                 ]}
+//                                                 android_ripple={{ color: "#e0e0e0" }}
+//                                                 onPress={() => {
+//                                                     callBack(exercise);
+//                                                     setOpen(false);
+
+//                                                 }}>
+//                                                 <Text key={section+exercise}style={styles.itemText}>{exercise}</Text>
+//                                             </Pressable>
+//                                         ))}
+//                                     </>
+//                                 ))
+//                             )
+//                             :
+//                             (sectionList.map((s) => (
+//                                 <Pressable
+//                                     key={s}
+//                                     style={({ pressed }) => [
+//                                         styles.item,
+//                                         pressed && { backgroundColor: "#f0f0f0" } // feedback
+//                                     ]}
+//                                     android_ripple={{ color: "#e0e0e0" }}
+//                                     onPress={() => {
+//                                         callBack(s);
+//                                         setOpen(false);
+
+//                                     }}>
+//                                     <Text style={styles.itemText}>{s}</Text>
+//                                 </Pressable>
+//                             )))}
 
 const styles = StyleSheet.create({
     button: {
@@ -96,6 +141,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderRadius: 8,
         paddingVertical: 10,
+
     },
     item: {
         padding: 14,
