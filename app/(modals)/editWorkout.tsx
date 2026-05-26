@@ -1,5 +1,6 @@
 import AddExerciseSectionButton from '@/components/AddExerciseSectionButton';
 import ExerciseSection from '@/components/ExerciseSection';
+import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
@@ -25,8 +26,11 @@ type Exercise = {
 };
 
 export default function EditWorkout() {
+    // This will have a list of all exercises that were created this date.
     const [exercises, setExercises] = useState<Exercise[]>([]);
 
+    // This will get us the selected date string.
+    const { date } = useLocalSearchParams();
 
 
     const handleButtonPress = () => {

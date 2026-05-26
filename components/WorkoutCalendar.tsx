@@ -11,7 +11,10 @@ export default function WorkoutCalendar() {
             <CalendarList
                 onDayPress={(day) => {
                     setSelectedDate(day.dateString);
-                    router.push("/(modals)/editWorkout");
+                    router.push({
+                        pathname: "/(modals)/editWorkout",
+                        params: {date : day.dateString},
+                    });
                 }}
                 markedDates={{
                     [selectedDate]: {selected: true, selectedColor: "#4CAF50"}
