@@ -1,8 +1,8 @@
 import AddExerciseSectionButton from '@/components/AddExerciseSectionButton';
 import ExerciseSection from '@/components/ExerciseSection';
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 
 // Empty exercise dictionary
 let emptyExercise = {
@@ -37,21 +37,37 @@ export default function EditWorkout() {
         setExercises([...exercises, emptyExercise]);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(exercises);
-    },[exercises])
+    }, [exercises])
+
+    const handleSave = () => {
+        console.log("pressed save.")
+    }
 
     return (
-        <ScrollView style={styles.container}>
-            <>
+        <>
+            <Stack.Screen
+                options={{
+                    title: "Edit Workout",
+                    headerRight: () => (
+                        <Pressable onPress={handleSave} style={{ marginRight: 16 }}>
+                            <Text style={{ fontSize: 16, color: "#4CAF50", fontWeight: "600" }}>
+                                Save
+                            </Text>
+                        </Pressable>
+                    ),
+                }}
+            />
+            <ScrollView style={styles.container}>
                 {
                     exercises.map((item, index) => (
                         <ExerciseSection key={index} />
                     ))
                 }
                 <AddExerciseSectionButton callBack={handleButtonPress} />
-            </>
-        </ScrollView>
+            </ScrollView>
+        </>
     )
 }
 
