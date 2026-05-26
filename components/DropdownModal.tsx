@@ -23,6 +23,7 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
 
                 onPress={() => setOpen(true)}>
                 <Text style={styles.buttonText}> {data} </Text>
+                <Text style={styles.icon}>▼</Text>
             </Pressable>
 
             <Modal visible={open} transparent animationType="fade">
@@ -34,7 +35,7 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
                                 renderItem={({ item }) => {
                                     const [section, exercises] = item;
                                     return (
-                                        <View style={{alignItems:"center"}}>
+                                        <View style={{ alignItems: "center" }}>
                                             <Text style={styles.itemText}>--- {section} ---</Text>
                                             {exercises.map(ex => <Pressable
                                                 key={ex}
@@ -79,50 +80,9 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
     );
 }
 
-// {list ?
-//                             (
-//                                 Object.keys(list).map((section) => (
-//                                     <>
-//                                         <Text key={section}>{section}</Text>
-//                                         {list[section].map((exercise) => (
-//                                             <Pressable
-//                                                 key={exercise}
-//                                                 style={({ pressed }) => [
-//                                                     styles.item,
-//                                                     pressed && { backgroundColor: "#f0f0f0" } // feedback
-//                                                 ]}
-//                                                 android_ripple={{ color: "#e0e0e0" }}
-//                                                 onPress={() => {
-//                                                     callBack(exercise);
-//                                                     setOpen(false);
-
-//                                                 }}>
-//                                                 <Text key={section+exercise}style={styles.itemText}>{exercise}</Text>
-//                                             </Pressable>
-//                                         ))}
-//                                     </>
-//                                 ))
-//                             )
-//                             :
-//                             (sectionList.map((s) => (
-//                                 <Pressable
-//                                     key={s}
-//                                     style={({ pressed }) => [
-//                                         styles.item,
-//                                         pressed && { backgroundColor: "#f0f0f0" } // feedback
-//                                     ]}
-//                                     android_ripple={{ color: "#e0e0e0" }}
-//                                     onPress={() => {
-//                                         callBack(s);
-//                                         setOpen(false);
-
-//                                     }}>
-//                                     <Text style={styles.itemText}>{s}</Text>
-//                                 </Pressable>
-//                             )))}
-
 const styles = StyleSheet.create({
     button: {
+        flexDirection: 'row',
         padding: 3,
         borderRadius: 2,
         borderWidth: 1,
@@ -148,5 +108,9 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 16,
+    },
+    icon: {
+        fontSize: 12,
+        marginLeft: 8,
     },
 });
