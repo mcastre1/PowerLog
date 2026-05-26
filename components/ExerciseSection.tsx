@@ -12,13 +12,13 @@ export default function ExerciseSection() {
 
     // Every time selectedSection changes, run this code
     // Check which section the user selected, and retrieve the right list of exercises.
-    useEffect(()=>{
-        switch(selectedSection){
+    useEffect(() => {
+        switch (selectedSection) {
             case 'Upper Body':
                 setExerciseList(upperBodyExercises);
                 setSelectedExercise(upperBodyExercises.chest[0]);
                 break;
-                
+
             case 'Lower Body':
                 setExerciseList(lowerBodyExercises);
                 setSelectedExercise(lowerBodyExercises.quads[0]);
@@ -30,8 +30,8 @@ export default function ExerciseSection() {
     return (
         <View style={styles.container}>
             <View style={styles.sectionHeader}>
-                <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section"/>
-                <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList}/>
+                <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section" />
+                <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
             </View>
         </View>
     );
@@ -43,11 +43,24 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
     sectionHeader: {
-        flex: 1,
         flexDirection: "row",
-        gap: 20,
-        padding:20,
+        gap: 4,
+        padding: 20,
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: "#B8B7B7",
+        borderRadius: 8,
+
+        backgroundColor: "#fff", // important so shadow looks correct
+
+        // iOS bottom-only shadow
+        shadowColor: "#000",
+        shadowOpacity: 0.08,
+        shadowRadius: 3,
+        shadowOffset: { width: 0, height: 3 },
+
+        // Android bottom-only shadow
+        elevation: 3,
     },
 });
