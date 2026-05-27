@@ -2,7 +2,7 @@ import { bodySection, lowerBodyExercises, upperBodyExercises } from "@/src/const
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from 'react-native';
 import DropdownModal from "./DropdownModal";
-
+import SetSection from "./SetSection";
 
 export default function ExerciseSection() {
     // Selected section and exercise that shows once Exercise modal shows up.
@@ -32,6 +32,9 @@ export default function ExerciseSection() {
             <View style={styles.sectionHeader}>
                 <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section" />
                 <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
+            </View>
+            <View style={styles.setsContainer}>
+                <SetSection/>
             </View>
         </View>
     );
@@ -63,4 +66,7 @@ const styles = StyleSheet.create({
         // Android bottom-only shadow
         elevation: 3,
     },
+    setsContainer: {
+        flex:1
+    }
 });
