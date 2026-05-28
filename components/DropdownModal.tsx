@@ -27,7 +27,8 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
             </Pressable>
 
             <Modal visible={open} transparent animationType="fade">
-                <Pressable style={styles.overlay} onPress={() => setOpen(false)}>
+                <View style={styles.overlay}>
+                    <Pressable style={StyleSheet.absoluteFill} onPress={() => setOpen(false)}/>
                     <View style={styles.menu}>
                         {list ? (
                             <FlatList
@@ -74,7 +75,7 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
                             ))
                         )}
                     </View>
-                </Pressable>
+                </View>
             </Modal>
         </>
     );
@@ -97,7 +98,8 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0,0,0,0.3)",
     },
     menu: {
-        marginHorizontal: 40,
+        marginHorizontal: 50,
+        marginVertical: 100,
         backgroundColor: "#fff",
         borderRadius: 8,
         paddingVertical: 10,

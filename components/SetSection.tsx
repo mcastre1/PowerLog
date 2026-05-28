@@ -4,8 +4,8 @@ import CounterInput from './CounterInput';
 export default function SetSection() {
     return <>
         <View style={styles.setContainer}>
-            <CounterInput />
-            <CounterInput />
+            <CounterInput label="Reps"/>
+            <CounterInput label='Weight'/>
         </View></>
 }
 
