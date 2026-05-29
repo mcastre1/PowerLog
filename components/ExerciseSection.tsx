@@ -4,11 +4,25 @@ import { StyleSheet, View } from 'react-native';
 import DropdownModal from "./DropdownModal";
 import SetSection from "./SetSection";
 
+let emptySet = { reps: "", weight: "" };
+
+type Set = {
+    reps: string,
+    weight: string,
+}
+
 export default function ExerciseSection() {
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
     const [selectedExercise, setSelectedExercise] = useState<string>(upperBodyExercises.chest[0]);
+
+    // Sets in this exercise
+    const [sets, setSets] = useState<Set[]>([]);
+
+    useEffect(() => {
+        setSets([...sets, emptySet]);
+    },[]);
 
     // Every time selectedSection changes, run this code
     // Check which section the user selected, and retrieve the right list of exercises.
@@ -34,7 +48,10 @@ export default function ExerciseSection() {
                 <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
             </View>
             <View style={styles.setsContainer}>
-                <SetSection/>
+                {sets.map((set, index) => (
+                    <SetSection key={index} />
+                ))
+                }
             </View>
         </View>
     );
@@ -67,6 +84,6 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     setsContainer: {
-        flex:1
+        flex: 1
     }
 });
