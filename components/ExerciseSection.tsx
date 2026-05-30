@@ -23,6 +23,10 @@ export default function ExerciseSection() {
         }));
     }
 
+    const handleInputChange = (id: string, field: string, value: string) => (
+        console.log(id, field, value)
+    ) 
+
     // Every time selectedSection changes, run this code
     // Check which section the user selected, and retrieve the right list of exercises.
     useEffect(() => {
@@ -52,7 +56,7 @@ export default function ExerciseSection() {
             <View style={styles.setsContainer}>
                 {
                     Object.entries(sets).map(([id, data]) => (
-                        <SetSection key={id} reps={data.reps} weight={data.weight} />
+                        <SetSection key={id} id={id} reps={data.reps} weight={data.weight} handleInputChange={handleInputChange}/>
                     ))
                 }
             </View>
