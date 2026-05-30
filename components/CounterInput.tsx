@@ -18,14 +18,6 @@ export default function CounterInput({label, val} : Props) {
         }
     }
 
-    const addOne = () => {
-        setValue(value + 1);
-    }
-
-    const minusOne = () => {
-        setValue(value - 1);
-    }
-
     return <>
         <View style={styles.container}>
                 <Text>{label}: </Text>

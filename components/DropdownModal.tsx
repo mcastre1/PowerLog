@@ -14,7 +14,7 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
     const sectionList = bodySection;
 
     return (
-        <>
+        <View style={styles.container}>
             <Pressable style={({ pressed }) => [
                 styles.button,
                 pressed && { opacity: 0.6 } // iOS feedback
@@ -22,13 +22,13 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
                 android_ripple={{ color: "#ddd" }} // Android ripple 
 
                 onPress={() => setOpen(true)}>
-                <Text style={styles.buttonText}> {data} </Text>
+                <Text style={styles.buttonText} ellipsizeMode="tail" numberOfLines={1}> {data} </Text>
                 <Text style={styles.icon}>▼</Text>
             </Pressable>
 
             <Modal visible={open} transparent animationType="fade">
                 <View style={styles.overlay}>
-                    <Pressable style={StyleSheet.absoluteFill} onPress={() => setOpen(false)}/>
+                    <Pressable style={StyleSheet.absoluteFill} onPress={() => setOpen(false)} />
                     <View style={styles.menu}>
                         {list ? (
                             <FlatList
@@ -77,11 +77,14 @@ export default function DropdownModal({ callBack, data, type, list }: Props) {
                     </View>
                 </View>
             </Modal>
-        </>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flexShrink:1,
+    },
     button: {
         flexDirection: 'row',
         padding: 3,
@@ -91,6 +94,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 16,
+        flexShrink: 1
     },
     overlay: {
         flex: 1,
@@ -114,5 +118,6 @@ const styles = StyleSheet.create({
     icon: {
         fontSize: 12,
         marginLeft: 8,
+        flexShrink: 0,
     },
 });
