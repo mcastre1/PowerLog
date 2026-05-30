@@ -1,15 +1,12 @@
 import { bodySection, lowerBodyExercises, upperBodyExercises } from "@/src/constants/exercises";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from 'react-native';
+import uuid from "react-native-uuid";
 import DropdownModal from "./DropdownModal";
 import SetSection from "./SetSection";
 
 let emptySet = { reps: "", weight: "" };
 
-type Set = {
-    reps: string,
-    weight: string,
-}
 
 export default function ExerciseSection() {
     // Selected section and exercise that shows once Exercise modal shows up.
@@ -18,11 +15,16 @@ export default function ExerciseSection() {
     const [selectedExercise, setSelectedExercise] = useState<string>(upperBodyExercises.chest[0]);
 
     // Sets in this exercise
-    const [sets, setSets] = useState<Set[]>([]);
+    const [sets, setSets] = useState<Record<string, {reps: string; weight: string}>>({});
 
-    useEffect(() => {
-        setSets([...sets, emptySet]);
-    },[]);
+    const addSet = () => {
+        const id = uuid.v4(); // Create a unique id
+
+        setSets(prev => ({
+            ...prev,
+            [id]: { reps: "0", weight: "0"}
+        }));
+    }
 
     // Every time selectedSection changes, run this code
     // Check which section the user selected, and retrieve the right list of exercises.
@@ -48,9 +50,10 @@ export default function ExerciseSection() {
                 <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
             </View>
             <View style={styles.setsContainer}>
-                {sets.map((set, index) => (
-                    <SetSection key={index} />
-                ))
+                {
+                    Object.entries(sets).map(([id, data]) => (
+                        <SetSection key={id} reps={data.reps} weight={data.weight}/>
+                    ))
                 }
             </View>
         </View>

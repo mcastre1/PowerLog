@@ -3,10 +3,12 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 
 type Props = {
     label : string,
+    val: string,
 }
 
-export default function CounterInput({label} : Props) {
-    const [value, setValue] = useState(0);
+export default function CounterInput({label, val} : Props) {
+    const [value, setValue] = useState(parseInt(val, 10));
+
     const handleChange = (text: string) => {
         const numericValue = text.replace(/[^0-9]/g, "");
         setValue(parseInt(numericValue, 10));

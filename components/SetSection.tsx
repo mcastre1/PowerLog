@@ -1,11 +1,16 @@
 import { StyleSheet, View } from 'react-native';
 import CounterInput from './CounterInput';
 
-export default function SetSection() {
+type Props = {
+    reps: string,
+    weight: string,
+}
+
+export default function SetSection({reps, weight} : Props) {
     return <>
         <View style={styles.setContainer}>
-            <CounterInput label="Reps"/>
-            <CounterInput label='Weight'/>
+            <CounterInput label="Reps" val={reps}/>
+            <CounterInput label='Weight' val={weight}/>
         </View></>
 }
 
