@@ -26,6 +26,17 @@ export default function ExerciseSection() {
     const handleInputChange = (id: string, field: string, value: string) => (
         console.log(id, field, value)
     ) 
+    
+    // Handles delete set actions
+    // Creates shallow copy of sets by retrieving the last state, most current
+    // deletes the id item and returns the new modified copy to setSets.
+    const handleDeleteSet = (id: string) => {
+        setSets(prev => { // function passes prev state
+            const copy = { ...prev}; // copy everything from prev state
+            delete copy[id]; // delete from copy the item with id
+            return copy; // return modified copy to setSets
+        })
+    }
 
     // Every time selectedSection changes, run this code
     // Check which section the user selected, and retrieve the right list of exercises.
@@ -47,8 +58,8 @@ export default function ExerciseSection() {
     return (
         <View style={styles.container}>
             <View style={styles.sectionHeader}>
-                <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section" />
-                <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
+                <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section"/>
+                <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList}/>
                 <Pressable style={styles.button} onPress={addSet}>
                     <Text style={styles.buttonText}>+</Text>
                 </Pressable>
@@ -56,7 +67,7 @@ export default function ExerciseSection() {
             <View style={styles.setsContainer}>
                 {
                     Object.entries(sets).map(([id, data]) => (
-                        <SetSection key={id} id={id} reps={data.reps} weight={data.weight} handleInputChange={handleInputChange}/>
+                        <SetSection key={id} id={id} reps={data.reps} weight={data.weight} handleInputChange={handleInputChange}  handleDeleteSet={handleDeleteSet}/>
                     ))
                 }
             </View>
