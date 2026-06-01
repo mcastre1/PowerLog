@@ -5,7 +5,11 @@ import uuid from "react-native-uuid";
 import DropdownModal from "./DropdownModal";
 import SetSection from "./SetSection";
 
-export default function ExerciseSection() {
+type Props = {
+    id : string;
+}
+
+export default function ExerciseSection({id} : Props) {
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);

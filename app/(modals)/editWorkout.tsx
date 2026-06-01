@@ -3,6 +3,7 @@ import ExerciseSection from '@/components/ExerciseSection';
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import uuid from "react-native-uuid";
 
 // Empty exercise dictionary
 let emptyExercise = {
@@ -34,7 +35,7 @@ export default function EditWorkout() {
 
 
     const handleButtonPress = () => {
-        setExercises([...exercises, emptyExercise]);
+        addExercise();
     }
 
     useEffect(() => {
@@ -44,6 +45,15 @@ export default function EditWorkout() {
     const handleSave = () => {
         console.log("pressed save.")
     }
+
+    const addExercise = () => {
+        const id = uuid.v4();
+
+        setExercises(prev => ({
+            ...prev,
+            [id]: {}
+        }));
+    };
 
     return (
         <>
@@ -61,8 +71,8 @@ export default function EditWorkout() {
             />
             <ScrollView style={styles.container}>
                 {
-                    exercises.map((item, index) => (
-                        <ExerciseSection key={index} />
+                    Object.entries(exercises).map(([id, data]) => (
+                        <ExerciseSection key={id} id={id}/>
                     ))
                 }
                 <AddExerciseSectionButton callBack={handleButtonPress} />
