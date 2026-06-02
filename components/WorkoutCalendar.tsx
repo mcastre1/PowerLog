@@ -1,10 +1,14 @@
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 
 export default function WorkoutCalendar() {
     const [selectedDate, setSelectedDate] = useState("");
+
+    useEffect(() => {
+        console.log(selectedDate);
+    });
     
     return (
         <View style={{ flex:1 }}>

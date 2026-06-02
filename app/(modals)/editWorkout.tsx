@@ -40,7 +40,7 @@ export default function EditWorkout() {
 
         const emtpyExercise : Exercise = {
             id: id,
-            date: date[0],
+            date: date,
             name: "",
             sets: [],
         }
