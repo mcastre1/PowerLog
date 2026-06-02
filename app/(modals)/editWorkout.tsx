@@ -5,19 +5,8 @@ import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import uuid from "react-native-uuid";
 
-// Empty exercise dictionary
-let emptyExercise = {
-    date: "",
-    name: "",
-    sets: [
-        {
-            reps: "",
-            weight: "",
-        },
-    ]
-};
-
 type Exercise = {
+    id: string;
     date: string;
     name: string;
     sets: {
@@ -49,10 +38,18 @@ export default function EditWorkout() {
     const addExercise = () => {
         const id = uuid.v4();
 
-        setExercises(prev => ({
-            ...prev,
-            [id]: {}
-        }));
+        const emtpyExercise : Exercise = {
+            id: id,
+            date: date[0],
+            name: "",
+            sets: [],
+        }
+
+        // setExercises(prev => ({
+        //     ...prev, 
+        //     [id]: {}
+        // }));
+        setExercises(prev => [...prev, emtpyExercise]);
     };
 
     return (
