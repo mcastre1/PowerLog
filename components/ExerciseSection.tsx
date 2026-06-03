@@ -7,10 +7,11 @@ import SetSection from "./SetSection";
 
 type Props = {
     id: string;
-    updateSets: (id: string, sets: { id: string; reps: string; weight: string }[]) => void;
+    updateSets: (id: string, sets: { id: string; Reps: string; Weight: string }[]) => void;
+    updateExercise: (id: string, exerciseName: string) => void;
 }
 
-export default function ExerciseSection({ id, updateSets }: Props) {
+export default function ExerciseSection({ id, updateSets, updateExercise }: Props) {
     console.log("received id: ", id);
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
@@ -18,16 +19,21 @@ export default function ExerciseSection({ id, updateSets }: Props) {
     const [selectedExercise, setSelectedExercise] = useState<string>(upperBodyExercises.chest[0]);
 
     // Sets in this exercise, we have to keep a copy here to be able to show and hide them from this exercise section.
-    const [sets, setSets] = useState<{ id: string, reps: string; weight: string }[]>([]);
+    const [sets, setSets] = useState<{ id: string, Reps: string; Weight: string }[]>([]);
 
     const handleAddSet = () => {
         const id = uuid.v4(); // Create a unique id
 
         setSets(prev => [
             ...prev,
-            { id: id, reps: "0", weight: "0" }
+            { id: id, Reps: "0", Weight: "0" }
         ]);
     }
+
+    // Whenever the selected exercise changes update in workout section dict.
+    useEffect(() => {
+        updateExercise(id, selectedExercise);
+    }, [selectedExercise]);
 
     // Whenever the sets state changes I need to update the sets for 
     // the working exercise with the new copy of sets.

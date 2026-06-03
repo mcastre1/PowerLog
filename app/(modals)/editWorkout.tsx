@@ -65,6 +65,17 @@ export default function EditWorkout() {
         );
     };
 
+    // Update the given exercise id name
+    const updateExercise = (id: string, exerciseName: string) => {
+        setExercises(prev =>
+            prev.map(exercise =>
+                exercise.id === id
+                ? {...exercise, ["name"]: exerciseName}
+                : exercise
+            )
+        )
+    }
+
     return (
         <>
             <Stack.Screen
@@ -82,7 +93,7 @@ export default function EditWorkout() {
             <ScrollView style={styles.container}>
                 {
                     Object.entries(exercises).map(([id, data]) => (
-                        <ExerciseSection key={data.id} id={data.id} updateSets={updateSets} />
+                        <ExerciseSection key={data.id} id={data.id} updateSets={updateSets} updateExercise={updateExercise}/>
                     ))
                 }
                 <AddExerciseSectionButton callBack={handleButtonPress} />
