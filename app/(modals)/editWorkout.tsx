@@ -10,6 +10,7 @@ type Exercise = {
     date: string;
     name: string;
     sets: {
+        id: string;
         reps: string;
         weight: string;
     }[];
@@ -19,9 +20,14 @@ export default function EditWorkout() {
     // This will have a list of all exercises that were created this date.
     const [exercises, setExercises] = useState<Exercise[]>([]);
 
-    // This will get us the selected date string.
-    const { date } = useLocalSearchParams();
+    const [sets, setSets] = useState<{id: string, reps: string, weight: string}[]>([]);
 
+    // This will get us the selected date string.
+    const { date } = useLocalSearchParams<{date : string}>();
+
+    const handleAddSet= (id: string) => {
+        console.log("added set")
+    }
 
     const handleButtonPress = () => {
         addExercise();
@@ -42,13 +48,9 @@ export default function EditWorkout() {
             id: id,
             date: date,
             name: "",
-            sets: [],
+            sets: sets,
         }
 
-        // setExercises(prev => ({
-        //     ...prev, 
-        //     [id]: {}
-        // }));
         setExercises(prev => [...prev, emtpyExercise]);
     };
 
@@ -69,7 +71,7 @@ export default function EditWorkout() {
             <ScrollView style={styles.container}>
                 {
                     Object.entries(exercises).map(([id, data]) => (
-                        <ExerciseSection key={id} id={id}/>
+                        <ExerciseSection key={id} id={id} adddSet={handleAddSet}/>
                     ))
                 }
                 <AddExerciseSectionButton callBack={handleButtonPress} />

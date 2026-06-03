@@ -6,40 +6,40 @@ import DropdownModal from "./DropdownModal";
 import SetSection from "./SetSection";
 
 type Props = {
-    id : string;
+    id: string;
+    adddSet: (id: string) => void;
 }
 
-export default function ExerciseSection({id} : Props) {
+export default function ExerciseSection({ id, adddSet }: Props) {
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
     const [selectedExercise, setSelectedExercise] = useState<string>(upperBodyExercises.chest[0]);
 
     // Sets in this exercise
-    const [sets, setSets] = useState<Record<string, { reps: string; weight: string }>>({});
+    const [sets, setSets] = useState<{ id: string, reps: string; weight: string }[]>([]);
 
-    const addSet = () => {
+    const handleAddSet = () => {
         const id = uuid.v4(); // Create a unique id
 
-        setSets(prev => ({
+        setSets(prev => [
             ...prev,
-            [id]: { reps: "0", weight: "0" }
-        }));
+            { id: id, reps: "0", weight: "0" }
+        ]);
     }
+
+    useEffect(() => {
+        console.log(sets);
+    }, [sets]);
+
 
     const handleInputChange = (id: string, field: string, value: string) => (
         console.log(id, field, value)
-    ) 
-    
+    )
+
     // Handles delete set actions
-    // Creates shallow copy of sets by retrieving the last state, most current
-    // deletes the id item and returns the new modified copy to setSets.
     const handleDeleteSet = (id: string) => {
-        setSets(prev => { // function passes prev state
-            const copy = { ...prev}; // copy everything from prev state
-            delete copy[id]; // delete from copy the item with id
-            return copy; // return modified copy to setSets
-        })
+        setSets(prev => prev.filter(set => set.id !== id)); // Filter out the set that has the same id.
     }
 
     // Every time selectedSection changes, run this code
@@ -62,16 +62,16 @@ export default function ExerciseSection({id} : Props) {
     return (
         <View style={styles.container}>
             <View style={styles.sectionHeader}>
-                <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section"/>
-                <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList}/>
-                <Pressable style={styles.button} onPress={addSet}>
+                <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section" />
+                <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
+                <Pressable style={styles.button} onPress={handleAddSet}>
                     <Text style={styles.buttonText}>+</Text>
                 </Pressable>
             </View>
             <View style={styles.setsContainer}>
-                {
+                {   // Here we map the set entries to the actual setSections, id is the index of the dictionary but we actually care about the data.id, reps, and weight.
                     Object.entries(sets).map(([id, data]) => (
-                        <SetSection key={id} id={id} reps={data.reps} weight={data.weight} handleInputChange={handleInputChange}  handleDeleteSet={handleDeleteSet}/>
+                        <SetSection key={data.id} id={data.id} reps={data.reps} weight={data.weight} handleInputChange={handleInputChange} handleDeleteSet={handleDeleteSet} />
                     ))
                 }
             </View>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     setsContainer: {
         flex: 1
     },
-    button :{
+    button: {
         backgroundColor: "#4CAF50",
         height: 32,
         width: 32,
