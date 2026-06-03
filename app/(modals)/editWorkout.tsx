@@ -20,38 +20,49 @@ export default function EditWorkout() {
     // This will have a list of all exercises that were created this date.
     const [exercises, setExercises] = useState<Exercise[]>([]);
 
-    const [sets, setSets] = useState<{id: string, reps: string, weight: string}[]>([]);
-
     // This will get us the selected date string.
-    const { date } = useLocalSearchParams<{date : string}>();
+    const { date } = useLocalSearchParams<{ date: string }>();
 
-    const handleAddSet= (id: string) => {
-        console.log("added set")
-    }
 
     const handleButtonPress = () => {
         addExercise();
     }
 
+    // Whenever exercises change do something, in this case just print it out.
     useEffect(() => {
-        console.log(exercises);
+        console.log(JSON.stringify(exercises, null, 2));
+
     }, [exercises])
 
+    // Handle saving the workout to the sql data base.
     const handleSave = () => {
         console.log("pressed save.")
     }
 
+    // Adds an empty exercise with a unique id to the exercises state.
     const addExercise = () => {
         const id = uuid.v4();
 
-        const emtpyExercise : Exercise = {
+        const emtpyExercise: Exercise = {
             id: id,
             date: date,
             name: "",
-            sets: sets,
+            sets: [],
         }
 
         setExercises(prev => [...prev, emtpyExercise]);
+    };
+
+    // Updates all the sets inside the given id for the exercise.
+    const updateSets = (id: string, sets: { id: string; reps: string; weight: string }[]) => {
+        console.log("seting sets for exercise id: ", id)
+        setExercises(prev =>
+            prev.map(exercise =>
+                exercise.id === id
+                    ? { ...exercise, sets } // update sets
+                    : exercise
+            )
+        );
     };
 
     return (
@@ -71,7 +82,7 @@ export default function EditWorkout() {
             <ScrollView style={styles.container}>
                 {
                     Object.entries(exercises).map(([id, data]) => (
-                        <ExerciseSection key={id} id={id} adddSet={handleAddSet}/>
+                        <ExerciseSection key={data.id} id={data.id} updateSets={updateSets} />
                     ))
                 }
                 <AddExerciseSectionButton callBack={handleButtonPress} />

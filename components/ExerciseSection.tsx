@@ -7,16 +7,17 @@ import SetSection from "./SetSection";
 
 type Props = {
     id: string;
-    adddSet: (id: string) => void;
+    updateSets: (id: string, sets: { id: string; reps: string; weight: string }[]) => void;
 }
 
-export default function ExerciseSection({ id, adddSet }: Props) {
+export default function ExerciseSection({ id, updateSets }: Props) {
+    console.log("received id: ", id);
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
     const [selectedExercise, setSelectedExercise] = useState<string>(upperBodyExercises.chest[0]);
 
-    // Sets in this exercise
+    // Sets in this exercise, we have to keep a copy here to be able to show and hide them from this exercise section.
     const [sets, setSets] = useState<{ id: string, reps: string; weight: string }[]>([]);
 
     const handleAddSet = () => {
@@ -28,14 +29,24 @@ export default function ExerciseSection({ id, adddSet }: Props) {
         ]);
     }
 
+    // Whenever the sets state changes I need to update the sets for 
+    // the working exercise with the new copy of sets.
     useEffect(() => {
-        console.log(sets);
+        updateSets(id, sets);
     }, [sets]);
 
 
-    const handleInputChange = (id: string, field: string, value: string) => (
+    const handleInputChange = (id: string, field: string, value: string) => {
         console.log(id, field, value)
-    )
+
+        setSets(prev =>
+            prev.map(set =>
+                set.id === id
+                ? {...set, [field]: value}
+                : set
+            )
+        )
+    }
 
     // Handles delete set actions
     const handleDeleteSet = (id: string) => {
