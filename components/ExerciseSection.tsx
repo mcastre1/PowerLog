@@ -12,7 +12,6 @@ type Props = {
 }
 
 export default function ExerciseSection({ id, updateSets, updateExercise }: Props) {
-    console.log("received id: ", id);
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
@@ -48,8 +47,8 @@ export default function ExerciseSection({ id, updateSets, updateExercise }: Prop
         setSets(prev =>
             prev.map(set =>
                 set.id === id
-                ? {...set, [field]: value}
-                : set
+                    ? { ...set, [field]: value }
+                    : set
             )
         )
     }
@@ -75,24 +74,37 @@ export default function ExerciseSection({ id, updateSets, updateExercise }: Prop
         }
     }, [selectedSection]);
 
+    // Function to send signal to edit workout page to delete given exercise id.
+    const handleDeleteExercise = () => {
+        console.log("Delete exercise: ", id);
+    }
+
     // UI
     return (
         <View style={styles.container}>
             <View style={styles.sectionHeader}>
-                <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section" />
-                <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
-                <Pressable style={styles.button} onPress={handleAddSet}>
-                    <Text style={styles.buttonText}>+</Text>
-                </Pressable>
+                <View style={styles.sectionDropdowns}>
+                    <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section" />
+                    <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
+                </View>
+                <View style={styles.sectionButtons}>
+                    <Pressable style={styles.button} onPress={handleDeleteExercise}>
+                        <Text style={styles.buttonText}>Delete Exercise</Text>
+                    </Pressable>
+                    <Pressable  style={styles.button} onPress={handleAddSet}>
+                        <Text style={styles.buttonText}>New Set</Text>
+                    </Pressable>
+                </View>
+
             </View>
             <View style={styles.setsContainer}>
                 {   // Here we map the set entries to the actual setSections, id is the index of the dictionary but we actually care about the data.id, reps, and weight.
                     Object.entries(sets).map(([id, data]) => (
-                        <SetSection key={data.id} id={data.id} reps={data.reps} weight={data.weight} handleInputChange={handleInputChange} handleDeleteSet={handleDeleteSet} />
+                        <SetSection key={data.id} id={data.id} reps={data.Reps} weight={data.Weight} handleInputChange={handleInputChange} handleDeleteSet={handleDeleteSet} />
                     ))
                 }
             </View>
-        </View>
+        </View >
     );
 }
 
@@ -102,7 +114,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
     sectionHeader: {
-        flexDirection: "row",
+        flexDirection: "column",
         gap: 4,
         padding: 20,
         alignItems: 'center',
@@ -122,18 +134,26 @@ const styles = StyleSheet.create({
         elevation: 3,
         flex: 1,
     },
+    sectionDropdowns: {
+        flexDirection: "row",
+        gap: 10
+    },
+    sectionButtons: {
+        paddingTop: 10,
+        flexDirection: "row",
+        gap: 10
+    },
     setsContainer: {
         flex: 1
     },
     button: {
-        backgroundColor: "#4CAF50",
-        height: 32,
-        width: 32,
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 16,
+        backgroundColor: "#726b6b",
+        borderRadius: 4,
+        flex: 1,
+        alignItems: "center"
     },
     buttonText: {
+        padding: 4,
         color: "#FFF"
     }
 });
