@@ -11,8 +11,8 @@ type Exercise = {
     name: string;
     sets: {
         id: string;
-        reps: string;
-        weight: string;
+        Reps: string;
+        Weight: string;
     }[];
 };
 
@@ -54,7 +54,7 @@ export default function EditWorkout() {
     };
 
     // Updates all the sets inside the given id for the exercise.
-    const updateSets = (id: string, sets: { id: string; reps: string; weight: string }[]) => {
+    const updateSets = (id: string, sets: { id: string; Reps: string; Weight: string }[]) => {
         console.log("seting sets for exercise id: ", id)
         setExercises(prev =>
             prev.map(exercise =>
@@ -76,6 +76,11 @@ export default function EditWorkout() {
         )
     }
 
+    // Delete the given exercise id object
+    const deleteExercise = (id: string) => {
+        setExercises(prev => prev.filter(exercise => exercise.id !== id));
+    }
+
     return (
         <>
             <Stack.Screen
@@ -93,7 +98,7 @@ export default function EditWorkout() {
             <ScrollView style={styles.container}>
                 {
                     Object.entries(exercises).map(([id, data]) => (
-                        <ExerciseSection key={data.id} id={data.id} updateSets={updateSets} updateExercise={updateExercise}/>
+                        <ExerciseSection key={data.id} id={data.id} updateSets={updateSets} updateExercise={updateExercise} deleteExercise={deleteExercise}/>
                     ))
                 }
                 <AddExerciseSectionButton callBack={handleButtonPress} />

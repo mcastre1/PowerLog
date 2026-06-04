@@ -9,9 +9,10 @@ type Props = {
     id: string;
     updateSets: (id: string, sets: { id: string; Reps: string; Weight: string }[]) => void;
     updateExercise: (id: string, exerciseName: string) => void;
+    deleteExercise: (id: string) => void;
 }
 
-export default function ExerciseSection({ id, updateSets, updateExercise }: Props) {
+export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise}: Props) {
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
@@ -76,7 +77,7 @@ export default function ExerciseSection({ id, updateSets, updateExercise }: Prop
 
     // Function to send signal to edit workout page to delete given exercise id.
     const handleDeleteExercise = () => {
-        console.log("Delete exercise: ", id);
+        deleteExercise(id);
     }
 
     // UI
