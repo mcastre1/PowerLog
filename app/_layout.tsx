@@ -1,10 +1,17 @@
+import { initDB } from "@/database/db";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function RootLayout() {
     const theme = useColorScheme();
+
+    // Initialize database once every time the app is opened.
+    useEffect(() => {
+        initDB();
+    }, []);
 
     return (
         <>
