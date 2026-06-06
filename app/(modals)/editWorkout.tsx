@@ -36,7 +36,11 @@ export default function EditWorkout() {
 
     // Handle saving the workout to the sql data base.
     const handleSave = () => {
-        console.log("pressed save.")
+        if(exercises.length > 0){
+            console.log("There are exercises");
+        }else{
+            console.log("There are no exercises");
+        }
     }
 
     // Adds an empty exercise with a unique id to the exercises state.
