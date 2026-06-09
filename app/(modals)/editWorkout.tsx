@@ -1,5 +1,6 @@
 import AddExerciseSectionButton from '@/components/AddExerciseSectionButton';
 import ExerciseSection from '@/components/ExerciseSection';
+import { getDB } from '@/database/db';
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
@@ -15,6 +16,10 @@ type Exercise = {
         Weight: string;
     }[];
 };
+
+type Props= {
+    date: string
+}
 
 export default function EditWorkout() {
     // This will have a list of all exercises that were created this date.
@@ -34,10 +39,24 @@ export default function EditWorkout() {
 
     }, [exercises])
 
+    // Once this page is visible to the user, retrieve all workouts for selected date.
+    useEffect(() =>{
+        retrieveWorkouts();
+    });
+
+    // Retrieve all workouts for this 'date'
+    async function retrieveWorkouts(){
+        const db = await getDB();
+        const results = await db.getFirstAsync('SELECT * FROM workouts WHERE date = ?', [date]);
+        console.log(results);
+        console.log(date);
+    }
+
     // Handle saving the workout to the sql data base.
     const handleSave = () => {
         if(exercises.length > 0){
             console.log("There are exercises");
+
         }else{
             console.log("There are no exercises");
         }
