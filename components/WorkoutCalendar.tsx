@@ -1,4 +1,5 @@
 import { getDB } from "@/database/db";
+import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
@@ -6,7 +7,7 @@ import { CalendarList } from "react-native-calendars";
 
 export default function WorkoutCalendar() {
     const [selectedDate, setSelectedDate] = useState("");
-
+    const isFocused = useIsFocused();
 
     useEffect(() => {
         console.log(selectedDate);
@@ -15,8 +16,10 @@ export default function WorkoutCalendar() {
     // For sqlite expo api, we need to call our query from an async function
     // but it will break expo's tab navigation so it we use a hook for it
     useEffect(()=> {
-        loadWorkoutDates();
-    });
+        if(isFocused){
+            loadWorkoutDates();
+        }
+    },[isFocused]);
 
     async function loadWorkoutDates() {
         const db = await getDB();
