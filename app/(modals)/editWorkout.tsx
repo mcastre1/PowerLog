@@ -47,8 +47,8 @@ export default function EditWorkout() {
     // Retrieve all workouts for this 'date'
     async function retrieveWorkouts(){
         const db = await getDB();
-        const results = await db.getFirstAsync('SELECT * FROM workouts WHERE date = ?', [date]);
-        console.log(results);
+        const results = await db.getAllAsync('SELECT * FROM workouts WHERE date = ?', [date]);
+        console.log("results :", results);
         console.log(date);
     }
 
@@ -56,10 +56,23 @@ export default function EditWorkout() {
     const handleSave = () => {
         if(exercises.length > 0){
             console.log("There are exercises");
+            saveWorkout();
 
         }else{
             console.log("There are no exercises");
         }
+    }
+
+    async function saveWorkout(){
+        // Workout id.
+        const id = uuid.v4();
+        const dateNow = new Date();
+        const dateString  = dateNow.toLocaleString();
+
+        const db = await getDB();
+        const results = await db.runAsync('INSERT INTO workouts (id, date, data, created_at, updated_at) VALUES (?,?,?,?,?)',
+            [id, date, JSON.stringify(exercises), dateString, dateString]);
+        console.log(results);
     }
 
     // Adds an empty exercise with a unique id to the exercises state.

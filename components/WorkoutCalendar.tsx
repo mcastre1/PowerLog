@@ -21,7 +21,7 @@ export default function WorkoutCalendar() {
     async function loadWorkoutDates() {
         const db = await getDB();
         const workouts = await db.getAllAsync("SELECT * FROM workouts")
-        console.log(workouts);
+        console.log("workout page: ", workouts);
     }
     //////////////////////////////////////////////////////
 
