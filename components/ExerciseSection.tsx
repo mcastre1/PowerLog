@@ -10,16 +10,17 @@ type Props = {
     updateSets: (id: string, sets: { id: string; Reps: string; Weight: string }[]) => void;
     updateExercise: (id: string, exerciseName: string) => void;
     deleteExercise: (id: string) => void;
+    pSets?: { id: string; Reps: string; Weight: string }[]
 }
 
-export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise}: Props) {
+export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise, pSets }: Props) {
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
     const [selectedExercise, setSelectedExercise] = useState<string>(upperBodyExercises.chest[0]);
 
     // Sets in this exercise, we have to keep a copy here to be able to show and hide them from this exercise section.
-    const [sets, setSets] = useState<{ id: string, Reps: string; Weight: string }[]>([]);
+    const [sets, setSets] = useState<{ id: string, Reps: string; Weight: string,}[]>([]);
 
     const handleAddSet = () => {
         const id = uuid.v4(); // Create a unique id
@@ -29,6 +30,11 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
             { id: id, Reps: "0", Weight: "0" }
         ]);
     }
+
+
+    useEffect(() => {
+        setSets(pSets || []); // Update the sets state with the new pSets value, if pSets is undefined use an empty array instead.
+    }, [id]);
 
     // Whenever the selected exercise changes update in workout section dict.
     useEffect(() => {
