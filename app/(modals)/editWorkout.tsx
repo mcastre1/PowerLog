@@ -42,12 +42,16 @@ export default function EditWorkout() {
     // Once this page is visible to the user, retrieve all workouts for selected date.
     useEffect(() =>{
         retrieveWorkouts();
-    });
+    }, [date]);
 
     // Retrieve all workouts for this 'date'
     async function retrieveWorkouts(){
         const db = await getDB();
         const results = await db.getAllAsync('SELECT * FROM workouts WHERE date = ?', [date]);
+        if(results.length > 0){
+            const workoutData = JSON.parse(results[0].data);
+            setExercises(workoutData);
+        }
         console.log("results :", results);
         console.log(date);
     }
