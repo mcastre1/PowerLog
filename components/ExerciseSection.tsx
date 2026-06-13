@@ -34,7 +34,8 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
 
     useEffect(() => {
         setSets(pSets || []); // Update the sets state with the new pSets value, if pSets is undefined use an empty array instead.
-    }, [id]);
+    }, [id]);                   // Only run if the id is present, this way we only update the sets when we change the exercise section, 
+                                // not when we change the sets inside the same exercise section.
 
     // Whenever the selected exercise changes update in workout section dict.
     useEffect(() => {

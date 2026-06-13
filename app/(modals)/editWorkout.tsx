@@ -74,7 +74,12 @@ export default function EditWorkout() {
         const dateString  = dateNow.toLocaleString();
 
         const db = await getDB();
-        const results = await db.runAsync('INSERT INTO workouts (id, date, data, created_at, updated_at) VALUES (?,?,?,?,?)',
+        const results = await db.runAsync(`INSERT INTO workouts (id, date, data, created_at, updated_at) 
+            VALUES (?,?,?,?,?)
+            ON CONFLICT(date) DO UPDATE SET
+            data=excluded.data,
+            updated_at=excluded.updated_at
+        `,
             [id, date, JSON.stringify(exercises), dateString, dateString]);
         console.log(results);
     }
