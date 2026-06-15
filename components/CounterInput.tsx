@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         minWidth: 100,
-        borderWidth: 1,
         padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
@@ -46,5 +45,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderWidth: 1,
         borderRadius: 5,
+        flex: 1,
+        textAlign: 'center',
     }
 });
