@@ -3,7 +3,7 @@ import ExerciseSection from '@/components/ExerciseSection';
 import { getDB } from '@/database/db';
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import uuid from "react-native-uuid";
 
 type Exercise = {
@@ -17,7 +17,7 @@ type Exercise = {
     }[];
 };
 
-type Props= {
+type Props = {
     date: string
 }
 
@@ -40,15 +40,15 @@ export default function EditWorkout() {
     }, [exercises])
 
     // Once this page is visible to the user, retrieve all workouts for selected date.
-    useEffect(() =>{
+    useEffect(() => {
         retrieveWorkouts();
     }, [date]);
 
     // Retrieve all workouts for this 'date'
-    async function retrieveWorkouts(){
+    async function retrieveWorkouts() {
         const db = await getDB();
         const results = await db.getAllAsync('SELECT * FROM workouts WHERE date = ?', [date]);
-        if(results.length > 0){
+        if (results.length > 0) {
             const workoutData = JSON.parse(results[0].data);
             setExercises(workoutData);
         }
@@ -58,20 +58,20 @@ export default function EditWorkout() {
 
     // Handle saving the workout to the sql data base.
     const handleSave = () => {
-        if(exercises.length > 0){
+        if (exercises.length > 0) {
             console.log("There are exercises");
             saveWorkout();
 
-        }else{
+        } else {
             console.log("There are no exercises");
         }
     }
 
-    async function saveWorkout(){
+    async function saveWorkout() {
         // Workout id.
         const id = uuid.v4();
         const dateNow = new Date();
-        const dateString  = dateNow.toLocaleString();
+        const dateString = dateNow.toLocaleString();
 
         const db = await getDB();
         const results = await db.runAsync(`INSERT INTO workouts (id, date, data, created_at, updated_at) 
@@ -115,8 +115,8 @@ export default function EditWorkout() {
         setExercises(prev =>
             prev.map(exercise =>
                 exercise.id === id
-                ? {...exercise, ["name"]: exerciseName}
-                : exercise
+                    ? { ...exercise, ["name"]: exerciseName }
+                    : exercise
             )
         )
     }
@@ -130,7 +130,7 @@ export default function EditWorkout() {
         <>
             <Stack.Screen
                 options={{
-                    title: "Edit Workout",
+                    title: "Workout for " + date,
                     headerRight: () => (
                         <Pressable onPress={handleSave} style={{ marginRight: 16 }}>
                             <Text style={{ fontSize: 16, color: "#4CAF50", fontWeight: "600" }}>
@@ -140,14 +140,19 @@ export default function EditWorkout() {
                     ),
                 }}
             />
-            <ScrollView style={styles.container}>
-                {
-                    Object.entries(exercises).map(([id, data]) => (
-                        <ExerciseSection key={data.id} id={data.id} updateSets={updateSets} updateExercise={updateExercise} deleteExercise={deleteExercise} pSets={data.sets} />
-                    ))
-                }
-                <AddExerciseSectionButton callBack={handleButtonPress} />
-            </ScrollView>
+            <KeyboardAvoidingView style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={150}
+            >
+                <ScrollView style={styles.container}>
+                    {
+                        Object.entries(exercises).map(([id, data]) => (
+                            <ExerciseSection key={data.id} id={data.id} updateSets={updateSets} updateExercise={updateExercise} deleteExercise={deleteExercise} pSets={data.sets} />
+                        ))
+                    }
+                    <AddExerciseSectionButton callBack={handleButtonPress} />
+                </ScrollView>
+            </KeyboardAvoidingView>
         </>
     )
 }
