@@ -19,7 +19,7 @@ export default function SetSection({id, reps, weight, handleInputChange, handleD
             <CounterInput id={id} label="Reps" val={reps} handleInputChange={handleInputChange}/>
             <CounterInput id={id} label='Weight' val={weight} handleInputChange={handleInputChange}/>
             <Pressable style={styles.button} onPress={handleDelete}>
-                <Text>X</Text>
+                <Text style={styles.buttonText}>X</Text>
             </Pressable>
         </View></>
 }
@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent: 'center',
         borderRadius: 8,
+    },
+    buttonText: {
+        color: "white",
     }
 
 });
