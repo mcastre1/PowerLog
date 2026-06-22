@@ -1,4 +1,6 @@
-export const darkTheme = {
+import { Theme } from "../types";
+
+export const darkTheme: Theme = {
     mode: "dark",
     colors: {
         background: "#000000",
