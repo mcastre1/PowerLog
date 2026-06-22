@@ -5,21 +5,27 @@ import { darkTheme } from "./dark";
 import { lightTheme } from "./light";
 import { ThemeContext } from "./ThemeContext";
 
-export function ThemeProvider({children}) {
+type ThemeProviderProps = {
+    children: React.ReactNode;
+};
+
+export function ThemeProvider({children}: ThemeProviderProps) {
     const systemScheme = useColorScheme();
-    const [mode, setMode] = useState('system');
+    const [mode, setMode] = useState<ThemeMode>('system');
+
+    type ThemeMode = 'light' | 'dark' | 'system';
 
     useEffect(() => {
         AsyncStorage.getItem('themeMode').then((value) => {
             if (value) {
-                setMode(value);
+                setMode(value as ThemeMode);
             }
         });
     }, []);
 
     const theme = mode === 'system' ? systemScheme === 'dark' ? darkTheme : lightTheme : mode === 'dark' ? darkTheme : lightTheme;
 
-    const updateMode = async (newMode) => {
+    const updateMode = async (newMode: ThemeMode) => {
         setMode(newMode);
         await AsyncStorage.setItem('themeMode', newMode);
     };
