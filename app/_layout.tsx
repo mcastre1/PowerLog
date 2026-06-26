@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { ThemeProvider } from "../src/constants/theme/ThemeProvider";
 
 export default function RootLayout() {
     const theme = useColorScheme();
@@ -11,8 +12,8 @@ export default function RootLayout() {
     //     initDB();
     // }, []);
 
-    return (
-        <>
+    return (<>
+        <ThemeProvider>
             <SafeAreaProvider>
                 <SafeAreaView style={{ flex: 1, backgroundColor: theme === "dark" ? "#000" : "#fff" }}>
                     <StatusBar
@@ -31,6 +32,7 @@ export default function RootLayout() {
                     </Stack>
                 </SafeAreaView>
             </SafeAreaProvider>
-        </>
+        </ThemeProvider>
+    </>
     );
 }

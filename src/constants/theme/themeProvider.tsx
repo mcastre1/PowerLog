@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as secureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 import { ThemeMode } from "../types";
@@ -16,7 +16,7 @@ export function ThemeProvider({children}: ThemeProviderProps) {
 
 
     useEffect(() => {
-        AsyncStorage.getItem('themeMode').then((value) => {
+        secureStore.getItemAsync('themeMode').then((value) => {
             if (value) {
                 setMode(value as ThemeMode);
             }
@@ -27,7 +27,7 @@ export function ThemeProvider({children}: ThemeProviderProps) {
 
     const updateMode = async (newMode: ThemeMode) => {
         setMode(newMode);
-        await AsyncStorage.setItem('themeMode', newMode);
+        await secureStore.setItemAsync('themeMode', newMode);
     };
 
     return (
