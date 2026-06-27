@@ -1,4 +1,5 @@
 import { getDB } from "@/database/db";
+import { useTheme } from "@/src/constants/theme/useTheme";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -32,6 +33,8 @@ export default function WorkoutCalendar() {
     const isFocused = useIsFocused();                      // Used to check if screen is focused.
     const [workoutDates, setWorkoutDates] = useState<string[]>([]);
     const [markedDates, setMarkedDates] = useState<Record<string, any>>()
+
+    const { theme } = useTheme(); // Custom hook to get the current theme (light or dark) from the ThemeContext.
 
     useEffect(() => {
         const marked = workoutDates.reduce<Record<string, any>>((acc, date) => {
@@ -69,8 +72,18 @@ export default function WorkoutCalendar() {
     //////////////////////////////////////////////////////
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <CalendarList
+                calendarStyle={{
+                    backgroundColor: theme.colors.background,
+                }}
+                theme={{
+                    backgroundColor: theme.colors.background,
+                    calendarBackground: theme.colors.background,
+                    dayTextColor: theme.colors.text,
+                    monthTextColor: theme.colors.text,
+                    textSectionTitleColor: theme.colors.text,
+                }}
                 onDayPress={(day) => {
                     router.push({
                         pathname: "/(modals)/editWorkout",

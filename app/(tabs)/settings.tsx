@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { ThemeToggle } from '@/components/ThemeToggle'
+import { StyleSheet, View } from 'react-native'
 
 export default function Settings() {
   return (
     <View style={styles.container}>
-        <Text>Settings</Text>
+        <ThemeToggle />
     </View> 
   )
 }
