@@ -1,11 +1,12 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useColorScheme } from "react-native";
+import { useContext } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { ThemeContext } from "../src/constants/theme/ThemeContext";
 import { ThemeProvider } from "../src/constants/theme/ThemeProvider";
 
 export default function RootLayout() {
-    const theme = useColorScheme();
+    const {theme} = useContext(ThemeContext);
 
     // Initialize database once every time the app is opened.
     // useEffect(() => {
@@ -15,9 +16,8 @@ export default function RootLayout() {
     return (<>
         <ThemeProvider>
             <SafeAreaProvider>
-                <SafeAreaView style={{ flex: 1, backgroundColor: theme === "dark" ? "#000" : "#fff" }}>
+                <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
                     <StatusBar
-                        style={theme === "dark" ? "light" : "dark"}
                         backgroundColor="transparent" />
                     <Stack>
                         <Stack.Screen
