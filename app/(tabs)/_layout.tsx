@@ -29,6 +29,18 @@ export default function TabsLayout() {
           ),
         })}
       />
+      <Tabs.Screen
+        name="settings"
+        options={({ route }) => ({
+          title: "Settings",
+          tabBarIcon: ({ color, focused }) => (
+            <AntDesign name="setting" size={24} color={focused ? 'black' : 'gray'} />
+          ),
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={[styles.tabBarLabel, { color: focused ? 'black' : 'gray' }]}>Settings</Text>
+          ),
+        })}
+      />
     </Tabs>
   );;
 }
