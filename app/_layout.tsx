@@ -1,17 +1,19 @@
+import { useTheme } from "@/src/constants/theme/useTheme";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useContext } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { ThemeContext } from "../src/constants/theme/ThemeContext";
 import { ThemeProvider } from "../src/constants/theme/ThemeProvider";
 
 export default function RootLayout() {
-    const {theme} = useContext(ThemeContext);
+    return (
+        <ThemeProvider>
+            <RootLayoutNav />
+        </ThemeProvider>
+    );
+}
 
-    // Initialize database once every time the app is opened.
-    // useEffect(() => {
-    //     initDB();
-    // }, []);
+function RootLayoutNav() {
+    const {theme} = useTheme(); // Get the current theme (light or dark) from the ThemeContext.
 
     return (<>
         <ThemeProvider>
