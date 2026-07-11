@@ -72,6 +72,7 @@ export default function WorkoutCalendar() {
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <CalendarList
+                key={theme.mode}
                 calendarStyle={{
                     backgroundColor: theme.colors.background,
                 }}
