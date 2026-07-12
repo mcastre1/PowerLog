@@ -68,16 +68,16 @@ export default function WorkoutCalendar() {
         setWorkoutDates(allDates);
     }
     //////////////////////////////////////////////////////
+    
 
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <CalendarList
-                key={theme.mode}
                 calendarStyle={{
                     backgroundColor: theme.colors.background,
                 }}
                 theme={{
-                    backgroundColor: theme.colors.background,
+                    backgroundColor: theme.colors.background, 
                     calendarBackground: theme.colors.background,
                     dayTextColor: theme.colors.text,
                     monthTextColor: theme.colors.text,
