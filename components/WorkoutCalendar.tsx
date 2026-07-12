@@ -1,7 +1,9 @@
 import { getDB } from "@/database/db";
+import { enqueue } from "@/database/queue";
+import { getAllWorkoutDates } from "@/database/workout";
 import { useTheme } from "@/src/constants/theme/useTheme";
 import { router, useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 
@@ -34,11 +36,16 @@ export default function WorkoutCalendar() {
 
     const { theme } = useTheme(); // Custom hook to get the current theme (light or dark) from the ThemeContext.
 
-    useFocusEffect(
-        useCallback(() => {
-            loadWorkoutDates();
-        }, [])
-    );
+    useFocusEffect(() => {
+        getAllWorkoutDates().then(rows => {
+            const dates: string[] = [];
+            rows.forEach(row => {
+                const parsedData: Exercise[] = JSON.parse(row.data);
+                parsedData.forEach(ex => dates.push(ex.date));
+            });
+            setWorkoutDates(dates);
+        });
+    });
 
 
     useEffect(() => {
@@ -55,8 +62,10 @@ export default function WorkoutCalendar() {
     // Retrieving all dates from workouts, and saving them in workoutDates.
     // for later use
     async function loadWorkoutDates() {
-        const db = await getDB();
-        const workouts = await db.getAllAsync<WorkoutRow>("SELECT * FROM workouts")
+        const workouts = await enqueue(async () => {
+            const db = await getDB();
+            return await db.getAllAsync<WorkoutRow>("SELECT * FROM workouts");
+        });
 
         const allDates: string[] = [];
 
@@ -68,7 +77,7 @@ export default function WorkoutCalendar() {
         setWorkoutDates(allDates);
     }
     //////////////////////////////////////////////////////
-    
+
 
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -77,7 +86,7 @@ export default function WorkoutCalendar() {
                     backgroundColor: theme.colors.background,
                 }}
                 theme={{
-                    backgroundColor: theme.colors.background, 
+                    backgroundColor: theme.colors.background,
                     calendarBackground: theme.colors.background,
                     dayTextColor: theme.colors.text,
                     monthTextColor: theme.colors.text,

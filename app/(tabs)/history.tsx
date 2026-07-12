@@ -14,16 +14,15 @@ export default function History() {
   async function loadWorkouts() {
     const db = await getDB();
     const rows = await db.getAllAsync("SELECT * FROM workouts");
+
+    console.log("Workouts loaded:", rows);
   }
 
   const { theme } = useTheme(); // Get the current theme (light or dark) from the ThemeContext.
 
-
-
-
   return <>
     <View style={{ flex: 1, backgroundColor: theme.colors.background, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: theme.colors.text }}>History ssPage</Text>
+      <Text style={{ color: theme.colors.text }}>History Page</Text>
     </View>
   </>
 }

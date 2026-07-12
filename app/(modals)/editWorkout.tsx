@@ -1,6 +1,7 @@
 import AddExerciseSectionButton from '@/components/AddExerciseSectionButton';
 import ExerciseSection from '@/components/ExerciseSection';
 import { getDB } from '@/database/db';
+import { enqueue } from '@/database/queue';
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
@@ -46,8 +47,11 @@ export default function EditWorkout() {
 
     // Retrieve all workouts for this 'date'
     async function retrieveWorkouts() {
+        const results = await enqueue(async () => {
         const db = await getDB();
-        const results = await db.getAllAsync('SELECT * FROM workouts WHERE date = ?', [date]);
+        return await db.getAllAsync('SELECT * FROM workouts WHERE date = ?', [date]);
+        });
+
         if (results.length > 0) {
             const workoutData = JSON.parse(results[0].data);
             setExercises(workoutData);
@@ -68,20 +72,21 @@ export default function EditWorkout() {
     }
 
     async function saveWorkout() {
+        return await enqueue(async () => {
         // Workout id.
         const id = uuid.v4();
         const dateNow = new Date();
         const dateString = dateNow.toLocaleString();
-
+        console.log("Saving: ", [id, date, JSON.stringify(exercises), dateString, dateString]);
         const db = await getDB();
-        const results = await db.runAsync(`INSERT INTO workouts (id, date, data, created_at, updated_at) 
-            VALUES (?,?,?,?,?)
-            ON CONFLICT(date) DO UPDATE SET
-            data=excluded.data,
-            updated_at=excluded.updated_at
-        `,
+        console.log("db: ", db);
+        const results = await db.runAsync(`INSERT INTO workouts(id, date, data, created_at, updated_at)
+        VALUES(?, ?, ?, ?, ?)
+        ON CONFLICT(date) DO UPDATE SET
+        data = excluded.data,
+            updated_at = excluded.updated_at;`,
             [id, date, JSON.stringify(exercises), dateString, dateString]);
-        console.log(results);
+        });
     }
 
     // Adds an empty exercise with a unique id to the exercises state.
