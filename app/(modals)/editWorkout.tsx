@@ -2,8 +2,9 @@ import AddExerciseSectionButton from '@/components/AddExerciseSectionButton';
 import ExerciseSection from '@/components/ExerciseSection';
 import { getDB } from '@/database/db';
 import { enqueue } from '@/database/queue';
-import { Stack, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from 'react';
+import { getWorkoutByDate } from '@/database/workout';
+import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import uuid from "react-native-uuid";
 
@@ -36,24 +37,16 @@ export default function EditWorkout() {
 
 
     // Once this page is visible to the user, retrieve all workouts for selected date.
-    useEffect(() => {
-        retrieveWorkouts();
-    }, [date]);
-
-    // Retrieve all workouts for this 'date'
-    async function retrieveWorkouts() {
-        const results = await enqueue(async () => {
-        const db = await getDB();
-        return await db.getAllAsync('SELECT * FROM workouts WHERE date = ?', [date]);
+    useFocusEffect(() => {
+        ///retrieveWorkouts();
+        getWorkoutByDate(date).then((results) => {
+            if (results.length > 0) {
+                const workoutData = JSON.parse(results[0].data);
+                setExercises(workoutData);
+            }
         });
+    });
 
-        if (results.length > 0) {
-            const workoutData = JSON.parse(results[0].data);
-            setExercises(workoutData);
-        }
-        console.log("results :", results);
-        console.log(date);
-    }
 
     // Handle saving the workout to the sql data base.
     const handleSave = () => {
@@ -100,7 +93,6 @@ export default function EditWorkout() {
 
     // Updates all the sets inside the given id for the exercise.
     const updateSets = (id: string, sets: { id: string; Reps: string; Weight: string }[]) => {
-        console.log("seting sets for exercise id: ", id)
         setExercises(prev =>
             prev.map(exercise =>
                 exercise.id === id

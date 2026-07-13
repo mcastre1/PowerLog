@@ -12,7 +12,7 @@ type WorkoutRow = {
 export async function getWorkoutByDate(date: string) {
   return enqueue(async () => {
     const db = await getDB();
-    return db.getAllAsync<WorkoutRow>("SELECT * FROM workouts WHERE date = ?", [date]);
+    return db.getAllAsync("SELECT * FROM workouts WHERE date = ?", [date]);
   });
 }
 
