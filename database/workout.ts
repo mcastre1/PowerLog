@@ -1,3 +1,4 @@
+import uuid from "react-native-uuid";
 import { getDB } from "./db";
 import { enqueue } from "./queue";
 
@@ -26,7 +27,7 @@ export async function getAllWorkoutDates() {
 export async function saveWorkout(date: string, exercises: any[]) {
   return enqueue(async () => {
     const db = await getDB();
-    const id = crypto.randomUUID();
+    const id = uuid.v4();
     const now = new Date().toLocaleString();
 
     return db.runAsync(

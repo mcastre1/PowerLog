@@ -1,6 +1,6 @@
 import { getDB } from "@/database/db";
 import { enqueue } from "@/database/queue";
-import { getAllWorkoutDates } from "@/database/workout";
+import { DBService } from "@/database/service";
 import { useTheme } from "@/src/constants/theme/useTheme";
 import { router, useFocusEffect } from "expo-router";
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ export default function WorkoutCalendar() {
     const { theme } = useTheme(); // Custom hook to get the current theme (light or dark) from the ThemeContext.
 
     useFocusEffect(() => {
-        getAllWorkoutDates().then(rows => {
+        DBService.getAllWorkouts().then(rows => {
             const dates: string[] = [];
             rows.forEach(row => {
                 const parsedData: Exercise[] = JSON.parse(row.data);

@@ -1,10 +1,8 @@
 import AddExerciseSectionButton from '@/components/AddExerciseSectionButton';
 import ExerciseSection from '@/components/ExerciseSection';
-import { getDB } from '@/database/db';
-import { enqueue } from '@/database/queue';
-import { getWorkoutByDate } from '@/database/workout';
-import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useState } from 'react';
+import { DBService } from '@/database/service';
+import { Stack, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import uuid from "react-native-uuid";
 
@@ -37,45 +35,46 @@ export default function EditWorkout() {
 
 
     // Once this page is visible to the user, retrieve all workouts for selected date.
-    useFocusEffect(() => {
+    useEffect(() => {
         ///retrieveWorkouts();
-        getWorkoutByDate(date).then((results) => {
+        DBService.getWorkoutByDate(date).then((results) => {
             if (results.length > 0) {
                 const workoutData = JSON.parse(results[0].data);
                 setExercises(workoutData);
             }
         });
-    });
+    }, [date]);
 
 
     // Handle saving the workout to the sql data base.
     const handleSave = () => {
         if (exercises.length > 0) {
             console.log("There are exercises");
-            saveWorkout();
+            //saveWorkout();
+            DBService.saveWorkout(date, exercises);
 
         } else {
             console.log("There are no exercises");
         }
     }
 
-    async function saveWorkout() {
-        return await enqueue(async () => {
-        // Workout id.
-        const id = uuid.v4();
-        const dateNow = new Date();
-        const dateString = dateNow.toLocaleString();
-        console.log("Saving: ", [id, date, JSON.stringify(exercises), dateString, dateString]);
-        const db = await getDB();
-        console.log("db: ", db);
-        const results = await db.runAsync(`INSERT INTO workouts(id, date, data, created_at, updated_at)
-        VALUES(?, ?, ?, ?, ?)
-        ON CONFLICT(date) DO UPDATE SET
-        data = excluded.data,
-            updated_at = excluded.updated_at;`,
-            [id, date, JSON.stringify(exercises), dateString, dateString]);
-        });
-    }
+    // async function saveWorkout() {
+    //     return await enqueue(async () => {
+    //     // Workout id.
+    //     const id = uuid.v4();
+    //     const dateNow = new Date();
+    //     const dateString = dateNow.toLocaleString();
+    //     console.log("Saving: ", [id, date, JSON.stringify(exercises), dateString, dateString]);
+    //     const db = await getDB();
+    //     console.log("db: ", db);
+    //     const results = await db.runAsync(`INSERT INTO workouts(id, date, data, created_at, updated_at)
+    //     VALUES(?, ?, ?, ?, ?)
+    //     ON CONFLICT(date) DO UPDATE SET
+    //     data = excluded.data,
+    //         updated_at = excluded.updated_at;`,
+    //         [id, date, JSON.stringify(exercises), dateString, dateString]);
+    //     });
+    // }
 
     // Adds an empty exercise with a unique id to the exercises state.
     const addExercise = () => {
