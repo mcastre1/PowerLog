@@ -34,11 +34,6 @@ export default function EditWorkout() {
         addExercise();
     }
 
-    // Whenever exercises change do something, in this case just print it out.
-    useEffect(() => {
-        console.log(JSON.stringify(exercises, null, 2));
-
-    }, [exercises])
 
     // Once this page is visible to the user, retrieve all workouts for selected date.
     useEffect(() => {
