@@ -1,4 +1,3 @@
-import { initDB } from "@/database/db";
 import { useTheme } from "@/src/constants/theme/useTheme";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -17,14 +16,14 @@ export default function RootLayout() {
 function RootLayoutNav() {
     const { theme } = useTheme(); // Get the current theme (light or dark) from the ThemeContext.
     useEffect(() => {
-        initDB();
+        //initDB();
     }, []);
     return (<>
-        <ThemeProvider>
             <SafeAreaProvider>
                 <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
                     <StatusBar
-                        backgroundColor="transparent" />
+                        //backgroundColor="transparent" 
+                        />
                     <Stack>
                         <Stack.Screen
                             name="(tabs)"
@@ -38,7 +37,6 @@ function RootLayoutNav() {
                     </Stack>
                 </SafeAreaView>
             </SafeAreaProvider>
-        </ThemeProvider>
     </>
     );
 }

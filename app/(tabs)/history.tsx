@@ -1,4 +1,3 @@
-import { getDB } from '@/database/db';
 import { useTheme } from '@/src/constants/theme/useTheme';
 import { useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
@@ -12,10 +11,10 @@ export default function History() {
   );
 
   async function loadWorkouts() {
-    const db = await getDB();
-    const rows = await db.getAllAsync("SELECT * FROM workouts");
+    // const db = await getDB();
+    // const rows = await db.getAllAsync("SELECT * FROM workouts");
 
-    console.log("Workouts loaded:", rows);
+    // console.log("Workouts loaded:", rows);
   }
 
   const { theme } = useTheme(); // Get the current theme (light or dark) from the ThemeContext.

@@ -1,7 +1,5 @@
-import { getDB } from "@/database/db";
-import { enqueue } from "@/database/queue";
-import { DBService } from "@/database/service";
 import { useTheme } from "@/src/constants/theme/useTheme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useFocusEffect } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
@@ -37,14 +35,17 @@ export default function WorkoutCalendar() {
     const { theme } = useTheme(); // Custom hook to get the current theme (light or dark) from the ThemeContext.
 
     useFocusEffect(() => {
-        DBService.getAllWorkouts().then(rows => {
-            const dates: string[] = [];
-            rows.forEach(row => {
-                const parsedData: Exercise[] = JSON.parse(row.data);
-                parsedData.forEach(ex => dates.push(ex.date));
-            });
-            setWorkoutDates(dates);
-        });
+        // DBService.getAllWorkouts().then(rows => {
+        //     const dates: string[] = [];
+        //     rows.forEach(row => {
+        //         const parsedData: Exercise[] = JSON.parse(row.data);
+        //         parsedData.forEach(ex => dates.push(ex.date));
+        //     });
+        //     setWorkoutDates(dates);
+        // });
+
+        loadWorkoutDates();
+
     });
 
 
@@ -62,19 +63,21 @@ export default function WorkoutCalendar() {
     // Retrieving all dates from workouts, and saving them in workoutDates.
     // for later use
     async function loadWorkoutDates() {
-        const workouts = await enqueue(async () => {
-            const db = await getDB();
-            return await db.getAllAsync<WorkoutRow>("SELECT * FROM workouts");
-        });
+        // const workouts = await enqueue(async () => {
+        //     const db = await getDB();
+        //     return await db.getAllAsync<WorkoutRow>("SELECT * FROM workouts");
+        // });
 
-        const allDates: string[] = [];
+        // const allDates: string[] = [];
 
-        workouts.forEach(row => {
-            const parsedData: Exercise[] = JSON.parse(row.data);
-            parsedData.forEach(ex => allDates.push(ex.date));
-        });
-
-        setWorkoutDates(allDates);
+        // workouts.forEach(row => {
+        //     const parsedData: Exercise[] = JSON.parse(row.data);
+        //     parsedData.forEach(ex => allDates.push(ex.date));
+        // });
+        const keys = await AsyncStorage.getAllKeys();
+        const workoutKeys = keys.filter(key => key.startsWith('workout:')).map(key => key.replace('workout:', ''));
+        console.log('Workout keys:', workoutKeys);
+        //setWorkoutDates(allDates);
     }
     //////////////////////////////////////////////////////
 

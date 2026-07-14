@@ -1,6 +1,5 @@
 import AddExerciseSectionButton from '@/components/AddExerciseSectionButton';
 import ExerciseSection from '@/components/ExerciseSection';
-import { DBService } from '@/database/service';
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
@@ -37,25 +36,25 @@ export default function EditWorkout() {
     // Once this page is visible to the user, retrieve all workouts for selected date.
     useEffect(() => {
         ///retrieveWorkouts();
-        DBService.getWorkoutByDate(date).then((results) => {
-            if (results.length > 0) {
-                const workoutData = JSON.parse(results[0].data);
-                setExercises(workoutData);
-            }
-        });
+        // DBService.getWorkoutByDate(date).then((results) => {
+        //     if (results.length > 0) {
+        //         const workoutData = JSON.parse(results[0].data);
+        //         setExercises(workoutData);
+        //     }
+        // });
     }, [date]);
 
 
     // Handle saving the workout to the sql data base.
     const handleSave = () => {
-        if (exercises.length > 0) {
-            console.log("There are exercises");
-            //saveWorkout();
-            DBService.saveWorkout(date, exercises);
+        // if (exercises.length > 0) {
+        //     console.log("There are exercises");
+        //     //saveWorkout();
+        //     DBService.saveWorkout(date, exercises);
 
-        } else {
-            console.log("There are no exercises");
-        }
+        // } else {
+        //     console.log("There are no exercises");
+        // }
     }
 
     // async function saveWorkout() {
