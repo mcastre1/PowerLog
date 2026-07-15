@@ -1,5 +1,6 @@
 import AddExerciseSectionButton from '@/components/AddExerciseSectionButton';
 import ExerciseSection from '@/components/ExerciseSection';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
@@ -42,8 +43,19 @@ export default function EditWorkout() {
         //         setExercises(workoutData);
         //     }
         // });
+        loadWorkoutByDate(date);
     }, [date]);
 
+    async function loadWorkoutByDate(date: string) {
+        const json = await AsyncStorage.getItem(`workout:${date}`);
+        console.log("Retrieved workout for date: ", date, json);
+        if (json) {
+            const workoutData: Exercise[] = JSON.parse(json);
+            setExercises(workoutData);
+        } else {
+            setExercises([]);
+        }
+    }
 
     // Handle saving the workout to the sql data base.
     const handleSave = () => {
