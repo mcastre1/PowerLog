@@ -1,4 +1,5 @@
 import { useTheme } from '@/src/constants/theme/useTheme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
 import { Text, View } from 'react-native';
@@ -11,10 +12,11 @@ export default function History() {
   );
 
   async function loadWorkouts() {
-    // const db = await getDB();
-    // const rows = await db.getAllAsync("SELECT * FROM workouts");
+    const keys = await AsyncStorage.getAllKeys();
+    const workoutKeys = keys.filter(key => key.startsWith('workout:'));
+    const workouts = await AsyncStorage.multiGet(workoutKeys);
 
-    // console.log("Workouts loaded:", rows);
+    console.log('Workouts:', workouts);
   }
 
   const { theme } = useTheme(); // Get the current theme (light or dark) from the ThemeContext.
