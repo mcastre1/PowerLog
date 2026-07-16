@@ -9,10 +9,12 @@ export default function WorkoutCalendar() {
     const [markedDates, setMarkedDates] = useState<Record<string, any>>()
 
     const { theme } = useTheme(); // Custom hook to get the current theme (light or dark) from the ThemeContext.
+    const [calendar_id, setCalendarID] = useState(new Date().toLocaleTimeString()); // Get the current time as a string.
 
     useFocusEffect(
         useCallback(() => {
             loadWorkoutDates();
+            setCalendarID(new Date().toLocaleTimeString()); // Update the calendar_id to the current time whenever the screen is focused.
         }, [])
     );
 
@@ -34,7 +36,7 @@ export default function WorkoutCalendar() {
 
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
-            <CalendarList
+            <CalendarList key ={calendar_id}
                 calendarStyle={{
                     backgroundColor: theme.colors.background,
                 }}
