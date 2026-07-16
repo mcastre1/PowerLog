@@ -1,7 +1,6 @@
 import { useTheme } from "@/src/constants/theme/useTheme";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { ThemeProvider } from "../src/constants/theme/ThemeProvider";
 
@@ -15,9 +14,6 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
     const { theme } = useTheme(); // Get the current theme (light or dark) from the ThemeContext.
-    useEffect(() => {
-        //initDB();
-    }, []);
     return (<>
             <SafeAreaProvider>
                 <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>

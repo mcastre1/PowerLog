@@ -1,83 +1,33 @@
 import { useTheme } from "@/src/constants/theme/useTheme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useFocusEffect } from "expo-router";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 
-type Workout = {
-    id: string;
-    date: string;
-    data: Exercise[];
-    created_at: string;
-    updated_at: string;
-};
-
-type Exercise = {
-    id: string;
-    date: string;
-    name: string;
-    sets: { id: string; Reps: string; Weight: string }[];
-};
-
-type WorkoutRow = {
-    id: string;
-    date: string;
-    data: string; // JSON string from DB
-    created_at: string;
-    updated_at: string;
-};
-
 export default function WorkoutCalendar() {
-    const [workoutDates, setWorkoutDates] = useState<string[]>([]);
     const [markedDates, setMarkedDates] = useState<Record<string, any>>()
 
     const { theme } = useTheme(); // Custom hook to get the current theme (light or dark) from the ThemeContext.
 
-    useFocusEffect(() => {
-        // DBService.getAllWorkouts().then(rows => {
-        //     const dates: string[] = [];
-        //     rows.forEach(row => {
-        //         const parsedData: Exercise[] = JSON.parse(row.data);
-        //         parsedData.forEach(ex => dates.push(ex.date));
-        //     });
-        //     setWorkoutDates(dates);
-        // });
+    useFocusEffect(
+        useCallback(() => {
+            loadWorkoutDates();
+        }, [])
+    );
 
-        loadWorkoutDates();
-
-    });
-
-
-    useEffect(() => {
-        const marked = workoutDates.reduce<Record<string, any>>((acc, date) => {
+    // Retrieving all dates from workouts, and saving them in workoutDates.
+    // for later use
+    async function loadWorkoutDates() {
+        const keys = await AsyncStorage.getAllKeys();
+        const workoutKeys = keys.filter(key => key.startsWith('workout:')).map(key => key.replace('workout:', ''));
+        console.log('Workout keys:', workoutKeys);
+        const marked = workoutKeys.reduce<Record<string, any>>((acc, date) => {
             acc[date] = { selected: true, selectedColor: "#4CAF50" }
             return acc;
         }, {});
 
         setMarkedDates(marked);
-        console.log(workoutDates);
-    }, [workoutDates])
-
-
-    // Retrieving all dates from workouts, and saving them in workoutDates.
-    // for later use
-    async function loadWorkoutDates() {
-        // const workouts = await enqueue(async () => {
-        //     const db = await getDB();
-        //     return await db.getAllAsync<WorkoutRow>("SELECT * FROM workouts");
-        // });
-
-        // const allDates: string[] = [];
-
-        // workouts.forEach(row => {
-        //     const parsedData: Exercise[] = JSON.parse(row.data);
-        //     parsedData.forEach(ex => allDates.push(ex.date));
-        // });
-        const keys = await AsyncStorage.getAllKeys();
-        const workoutKeys = keys.filter(key => key.startsWith('workout:')).map(key => key.replace('workout:', ''));
-        console.log('Workout keys:', workoutKeys);
-        //setWorkoutDates(allDates);
     }
     //////////////////////////////////////////////////////
 

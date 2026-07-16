@@ -17,10 +17,6 @@ type Exercise = {
     }[];
 };
 
-type Props = {
-    date: string
-}
-
 export default function EditWorkout() {
     // This will have a list of all exercises that were created this date.
     const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -33,16 +29,8 @@ export default function EditWorkout() {
         addExercise();
     }
 
-
     // Once this page is visible to the user, retrieve all workouts for selected date.
     useEffect(() => {
-        ///retrieveWorkouts();
-        // DBService.getWorkoutByDate(date).then((results) => {
-        //     if (results.length > 0) {
-        //         const workoutData = JSON.parse(results[0].data);
-        //         setExercises(workoutData);
-        //     }
-        // });
         loadWorkoutByDate(date);
     }, [date]);
 
@@ -59,33 +47,17 @@ export default function EditWorkout() {
 
     // Handle saving the workout to the sql data base.
     const handleSave = () => {
-        // if (exercises.length > 0) {
-        //     console.log("There are exercises");
-        //     //saveWorkout();
-        //     DBService.saveWorkout(date, exercises);
-
-        // } else {
-        //     console.log("There are no exercises");
-        // }
+        if (exercises.length > 0) {
+            console.log("There are exercises");
+            saveWorkout();
+        } else {
+            console.log("There are no exercises");
+        }
     }
 
-    // async function saveWorkout() {
-    //     return await enqueue(async () => {
-    //     // Workout id.
-    //     const id = uuid.v4();
-    //     const dateNow = new Date();
-    //     const dateString = dateNow.toLocaleString();
-    //     console.log("Saving: ", [id, date, JSON.stringify(exercises), dateString, dateString]);
-    //     const db = await getDB();
-    //     console.log("db: ", db);
-    //     const results = await db.runAsync(`INSERT INTO workouts(id, date, data, created_at, updated_at)
-    //     VALUES(?, ?, ?, ?, ?)
-    //     ON CONFLICT(date) DO UPDATE SET
-    //     data = excluded.data,
-    //         updated_at = excluded.updated_at;`,
-    //         [id, date, JSON.stringify(exercises), dateString, dateString]);
-    //     });
-    // }
+    async function saveWorkout() {
+        await AsyncStorage.setItem(`workout:${date}`, JSON.stringify(exercises));
+    }
 
     // Adds an empty exercise with a unique id to the exercises state.
     const addExercise = () => {
