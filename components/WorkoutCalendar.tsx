@@ -2,10 +2,12 @@ import { useTheme } from "@/src/constants/theme/useTheme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 
 export default function WorkoutCalendar() {
+    const [loading, setLoading] = useState(true); // State to track if the workout dates are still loading.
+
     const [markedDates, setMarkedDates] = useState<Record<string, any>>()
 
     const { theme } = useTheme(); // Custom hook to get the current theme (light or dark) from the ThemeContext.
@@ -21,6 +23,7 @@ export default function WorkoutCalendar() {
     // Retrieving all dates from workouts, and saving them in workoutDates.
     // for later use
     async function loadWorkoutDates() {
+        setLoading(true);
         const keys = await AsyncStorage.getAllKeys();
         const workoutKeys = keys.filter(key => key.startsWith('workout:')).map(key => key.replace('workout:', ''));
         console.log('Workout keys:', workoutKeys);
@@ -30,13 +33,19 @@ export default function WorkoutCalendar() {
         }, {});
 
         setMarkedDates(marked);
+        setLoading(false);
     }
     //////////////////////////////////////////////////////
 
+    if (loading) {
+        return <><View style={{ flex: 1, backgroundColor: theme.colors.background, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: theme.colors.text }}>Loading...</Text>
+        </View></>
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
-            <CalendarList key ={calendar_id}
+            <CalendarList key={calendar_id}
                 calendarStyle={{
                     backgroundColor: theme.colors.background,
                 }}
