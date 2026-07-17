@@ -11,9 +11,10 @@ type Props = {
     updateExercise: (id: string, exerciseName: string) => void;
     deleteExercise: (id: string) => void;
     pSets?: { id: string; Reps: string; Weight: string }[]
+    name?: string;
 }
 
-export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise, pSets }: Props) {
+export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise, pSets, name}: Props) {
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
@@ -34,8 +35,7 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
 
     useEffect(() => {
         setSets(pSets || []); // Update the sets state with the new pSets value, if pSets is undefined use an empty array instead.
-    }, [id]);                   // Only run if the id is present, this way we only update the sets when we change the exercise section, 
-                                // not when we change the sets inside the same exercise section.
+    }, [id]);                   
 
     // Whenever the selected exercise changes update in workout section dict.
     useEffect(() => {
