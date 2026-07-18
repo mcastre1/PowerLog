@@ -16,7 +16,7 @@ type Props = {
 
 export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise, pSets, name}: Props) {
     // Selected section and exercise that shows once Exercise modal shows up.
-    const [selectedSection, setSelectedSection] = useState<string>(bodySection[0]);
+    const [selectedSection, setSelectedSection] = useState<string>(bodySection[0] as string);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
     const [selectedExercise, setSelectedExercise] = useState<string>(upperBodyExercises.chest[0]);
 
@@ -31,7 +31,6 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
             { id: id, Reps: "0", Weight: "0" }
         ]);
     }
-
 
     useEffect(() => {
         setSets(pSets || []); // Update the sets state with the new pSets value, if pSets is undefined use an empty array instead.

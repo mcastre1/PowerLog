@@ -121,7 +121,7 @@ export default function EditWorkout() {
                 <ScrollView style={styles.container}>
                     {
                         Object.entries(exercises).map(([id, data]) => (
-                            <ExerciseSection key={data.id} id={data.id} updateSets={updateSets} updateExercise={updateExercise} deleteExercise={deleteExercise} pSets={data.sets} />
+                            <ExerciseSection name={data.name} key={data.id} id={data.id} updateSets={updateSets} updateExercise={updateExercise} deleteExercise={deleteExercise} pSets={data.sets} />
                         ))
                     }
                     <AddExerciseSectionButton callBack={handleButtonPress} />

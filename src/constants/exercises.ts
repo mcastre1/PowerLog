@@ -1,7 +1,7 @@
 export const bodySection = [
     "Upper Body",
     "Lower Body"
-] as const;
+];
 
 export const lowerBodyExercises = {
     quads: [
@@ -39,7 +39,7 @@ export const lowerBodyExercises = {
     "Barbell Standing Calf Raise",
     "Dumbbell Seated Calf Raise"
   ]
-} as const;
+};
 
 export const upperBodyExercises = {
   chest: [
@@ -92,4 +92,4 @@ export const upperBodyExercises = {
     "Close-Grip Barbell Bench Press",
     "Dumbbell Kickback"
   ]
-} as const;
+};
