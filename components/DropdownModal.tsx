@@ -7,9 +7,10 @@ type Props = {
     data: string;
     type: string;
     list?: Record<string, readonly string[]>
+    name?: string;
 }
 
-export default function DropdownModal({ callBack, data, type, list }: Props) {
+export default function DropdownModal({ callBack, data, type, list}: Props) {
     const [open, setOpen] = useState(false);
     const sectionList = bodySection;
 

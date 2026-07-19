@@ -10,6 +10,7 @@ type Exercise = {
     id: string;
     date: string;
     name: string;
+    section: string;
     sets: {
         id: string;
         Reps: string;
@@ -67,6 +68,7 @@ export default function EditWorkout() {
             id: id,
             date: date,
             name: "",
+            section: "",
             sets: [],
         }
 
@@ -85,11 +87,11 @@ export default function EditWorkout() {
     };
 
     // Update the given exercise id name
-    const updateExercise = (id: string, exerciseName: string) => {
+    const updateExercise = (id: string, exerciseName: string, section: string) => {
         setExercises(prev =>
             prev.map(exercise =>
                 exercise.id === id
-                    ? { ...exercise, ["name"]: exerciseName }
+                    ? { ...exercise, ["name"]: exerciseName, ["section"]: section }
                     : exercise
             )
         )

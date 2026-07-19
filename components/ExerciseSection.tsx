@@ -8,7 +8,7 @@ import SetSection from "./SetSection";
 type Props = {
     id: string;
     updateSets: (id: string, sets: { id: string; Reps: string; Weight: string }[]) => void;
-    updateExercise: (id: string, exerciseName: string) => void;
+    updateExercise: (id: string, exerciseName: string, section: string) => void;
     deleteExercise: (id: string) => void;
     pSets?: { id: string; Reps: string; Weight: string }[]
     name?: string;
@@ -34,12 +34,10 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
 
     useEffect(() => {
         setSets(pSets || []); // Update the sets state with the new pSets value, if pSets is undefined use an empty array instead.
+        console.log(name);
     }, [id]);                   
 
-    // Whenever the selected exercise changes update in workout section dict.
-    useEffect(() => {
-        updateExercise(id, selectedExercise);
-    }, [selectedExercise]);
+    
 
     // Whenever the sets state changes I need to update the sets for 
     // the working exercise with the new copy of sets.
@@ -81,6 +79,11 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
         }
     }, [selectedSection]);
 
+    // Whenever the selected exercise changes update in workout section dict.
+    useEffect(() => {
+        updateExercise(id, selectedExercise, selectedSection);
+    }, [selectedExercise]);
+
     // Function to send signal to edit workout page to delete given exercise id.
     const handleDeleteExercise = () => {
         deleteExercise(id);
@@ -92,7 +95,7 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
             <View style={styles.sectionHeader}>
                 <View style={styles.sectionDropdowns}>
                     <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section" />
-                    <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
+                    <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList}/>
                 </View>
                 <View style={styles.sectionButtons}>
                     <Pressable style={styles.button} onPress={handleDeleteExercise}>
