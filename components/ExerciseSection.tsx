@@ -12,9 +12,10 @@ type Props = {
     deleteExercise: (id: string) => void;
     pSets?: { id: string; Reps: string; Weight: string }[]
     name?: string;
+    section?: string;
 }
 
-export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise, pSets, name}: Props) {
+export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise, pSets, name, section}: Props) {
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0] as string);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
