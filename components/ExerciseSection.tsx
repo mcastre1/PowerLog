@@ -15,14 +15,14 @@ type Props = {
     section?: string;
 }
 
-export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise, pSets, name, section}: Props) {
+export default function ExerciseSection({ id, updateSets, updateExercise, deleteExercise, pSets, name, section }: Props) {
     // Selected section and exercise that shows once Exercise modal shows up.
     const [selectedSection, setSelectedSection] = useState<string>(bodySection[0] as string);
     const [exerciseList, setExerciseList] = useState<Record<string, readonly string[]>>(upperBodyExercises);
     const [selectedExercise, setSelectedExercise] = useState<string>(upperBodyExercises.chest[0]);
 
     // Sets in this exercise, we have to keep a copy here to be able to show and hide them from this exercise section.
-    const [sets, setSets] = useState<{ id: string, Reps: string; Weight: string,}[]>([]);
+    const [sets, setSets] = useState<{ id: string, Reps: string; Weight: string, }[]>([]);
 
     const handleAddSet = () => {
         const id = uuid.v4(); // Create a unique id
@@ -35,10 +35,12 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
 
     useEffect(() => {
         setSets(pSets || []); // Update the sets state with the new pSets value, if pSets is undefined use an empty array instead.
-        console.log(name);
-    }, [id]);                   
+        console.log(name + " - " + section);
+        setSelectedSection(section as string);
+        setSelectedExercise(name as string);
+    }, [id]);
 
-    
+
 
     // Whenever the sets state changes I need to update the sets for 
     // the working exercise with the new copy of sets.
@@ -70,12 +72,19 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
         switch (selectedSection) {
             case 'Upper Body':
                 setExerciseList(upperBodyExercises);
-                setSelectedExercise(upperBodyExercises.chest[0]);
+
+                setExerciseList(upperBodyExercises);
+                if (!selectedExercise) {
+                    setSelectedExercise(upperBodyExercises.chest[0]);
+                }
                 break;
 
             case 'Lower Body':
                 setExerciseList(lowerBodyExercises);
-                setSelectedExercise(lowerBodyExercises.quads[0]);
+
+                if (!selectedExercise) {
+                    setSelectedExercise(lowerBodyExercises.quads[0]);
+                }
                 break;
         }
     }, [selectedSection]);
@@ -96,13 +105,13 @@ export default function ExerciseSection({ id, updateSets, updateExercise, delete
             <View style={styles.sectionHeader}>
                 <View style={styles.sectionDropdowns}>
                     <DropdownModal callBack={setSelectedSection} data={selectedSection} type="section" />
-                    <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList}/>
+                    <DropdownModal callBack={setSelectedExercise} data={selectedExercise} type="exercise" list={exerciseList} />
                 </View>
                 <View style={styles.sectionButtons}>
                     <Pressable style={styles.button} onPress={handleDeleteExercise}>
                         <Text style={styles.buttonText}>Delete Exercise</Text>
                     </Pressable>
-                    <Pressable  style={styles.button} onPress={handleAddSet}>
+                    <Pressable style={styles.button} onPress={handleAddSet}>
                         <Text style={styles.buttonText}>New Set</Text>
                     </Pressable>
                 </View>
