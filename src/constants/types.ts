@@ -7,6 +7,8 @@ export type Theme = {
     text: string;
     card: string;
     primary: string;
+    focused: string;
+    notFocused: string;
   };
 };
 

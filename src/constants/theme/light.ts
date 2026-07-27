@@ -7,4 +7,6 @@ export const lightTheme: Theme = {
         text: "#111111",
         card: "#F2F2F2",
         primary: "#3B82F6",
+        focused: "#040404",
+        notFocused: "gray",
     }, };

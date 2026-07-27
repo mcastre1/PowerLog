@@ -1,9 +1,11 @@
-import { ThemeToggle } from '@/components/ThemeToggle'
-import { StyleSheet, View } from 'react-native'
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { useTheme } from '@/src/constants/theme/useTheme';
+import { StyleSheet, View } from 'react-native';
 
 export default function Settings() {
+  const {theme} = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={{backgroundColor : theme.colors.background, flex: 1}}>
         <ThemeToggle />
     </View> 
   )
@@ -12,7 +14,6 @@ export default function Settings() {
 const styles = StyleSheet.create({ 
     container :{
         flex: 1,
-        backgroundColor: '#fff',
     }
 })
 

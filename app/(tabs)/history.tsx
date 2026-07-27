@@ -48,7 +48,6 @@ export default function History() {
 
   return <>
     <View style={{ flex: 1, backgroundColor: theme.colors.background, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: theme.colors.text }}>History Page</Text>
       {
         Object.entries(workoutPRs).map(([exerciseName, maxWeight]) => (
           <Text key={exerciseName} style={{ color: theme.colors.text }}>{exerciseName}: {maxWeight} lbs</Text>

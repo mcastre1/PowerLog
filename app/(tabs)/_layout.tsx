@@ -15,10 +15,10 @@ export default function TabsLayout() {
           headerStyle: { backgroundColor: theme.colors.background}, // Set the background color of the header to white
           headerTitleStyle: { color: theme.colors.text}, // Set the text color of the header title to black
           tabBarIcon: ({ color, focused }) => (
-            <AntDesign name="calendar" size={24} color={focused ? 'black' : 'gray'} />
+            <AntDesign name="calendar" size={24} color={focused ? theme.colors.focused : theme.colors.notFocused} />
           ),
           tabBarLabel: ({ focused, color }) => (
-            <Text style={[styles.tabBarLabel, { color: focused ? 'black' : 'gray' }]}>Calendar</Text>
+            <Text style={[styles.tabBarLabel, { color: focused ? theme.colors.focused : theme.colors.notFocused }]}>Calendar</Text>
           ),
         })}
       />
@@ -30,10 +30,10 @@ export default function TabsLayout() {
           headerStyle: { backgroundColor: theme.colors.background}, // Set the background color of the header to white
           headerTitleStyle: { color: theme.colors.text}, // Set the text color of the header title to black
           tabBarIcon: ({ color, focused }) => (
-            <AntDesign name="bar-chart" size={24} color={focused ? 'black' : 'gray'} />
+            <AntDesign name="bar-chart" size={24} color={focused ? theme.colors.focused : theme.colors.notFocused} />
           ),
           tabBarLabel: ({ focused, color }) => (
-            <Text style={[styles.tabBarLabel, { color: focused ? 'black' : 'gray' }]}>History</Text>
+            <Text style={[styles.tabBarLabel, { color: focused ? theme.colors.focused : theme.colors.notFocused }]}>History</Text>
           ),
         })}
       />
@@ -45,10 +45,10 @@ export default function TabsLayout() {
           headerStyle: { backgroundColor: theme.colors.background}, // Set the background color of the header to white
           headerTitleStyle: { color: theme.colors.text}, // Set the text color of the header title to black
           tabBarIcon: ({ color, focused }) => (
-            <AntDesign name="setting" size={24} color={focused ? 'black' : 'gray'} />
+            <AntDesign name="setting" size={24} color={focused ? theme.colors.focused : theme.colors.notFocused} />
           ),
           tabBarLabel: ({ focused, color }) => (
-            <Text style={[styles.tabBarLabel, { color: focused ? 'black' : 'gray' }]}>Settings</Text>
+            <Text style={[styles.tabBarLabel, { color: focused ? theme.colors.focused : theme.colors.notFocused}]}>Settings</Text>
           ),
         })}
       />

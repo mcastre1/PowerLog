@@ -7,4 +7,6 @@ export const darkTheme: Theme = {
         text: "#ffffff",
         primary: "#60A5FA",
         card: "#1A1A1A",
+        focused: "#ffffff",
+        notFocused: "gray",
     },};
