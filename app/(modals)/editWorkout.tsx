@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import uuid from "react-native-uuid";
 
+// Exercise Object Structure
 type Exercise = {
     id: string;
     date: string;
@@ -18,6 +19,7 @@ type Exercise = {
     }[];
 };
 
+// Page that will show the selected date workout. If one exists.
 export default function EditWorkout() {
     // This will have a list of all exercises that were created this date.
     const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -25,7 +27,7 @@ export default function EditWorkout() {
     // This will get us the selected date string.
     const { date } = useLocalSearchParams<{ date: string }>();
 
-
+    // Helper function to help add an Exercise.
     const handleButtonPress = () => {
         addExercise();
     }
@@ -35,6 +37,7 @@ export default function EditWorkout() {
         loadWorkoutByDate(date);
     }, [date]);
 
+    // Async function to retrieve existing workout on date.
     async function loadWorkoutByDate(date: string) {
         const json = await AsyncStorage.getItem(`workout:${date}`);
         console.log("Retrieved workout for date: ", date, json);
@@ -56,6 +59,7 @@ export default function EditWorkout() {
         }
     }
 
+    // Save your workout
     async function saveWorkout() {
         await AsyncStorage.setItem(`workout:${date}`, JSON.stringify(exercises));
     }
