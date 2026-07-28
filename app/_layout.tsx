@@ -1,5 +1,4 @@
 import { useTheme } from "@/src/constants/theme/useTheme";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -7,13 +6,13 @@ import { ThemeProvider } from "../src/constants/theme/themeProvider";
 
 
 export default function RootLayout() {
-    async function clearWorkoutData() {
-        const keys = await AsyncStorage.getAllKeys();
-        const workoutKeys = keys.filter(key => key.startsWith("workout:"));
-        await AsyncStorage.multiRemove(workoutKeys);
-    }
+    // async function clearWorkoutData() {
+    //     const keys = await AsyncStorage.getAllKeys();
+    //     const workoutKeys = keys.filter(key => key.startsWith("workout:"));
+    //     await AsyncStorage.multiRemove(workoutKeys);
+    // }
 
-    clearWorkoutData()
+    // clearWorkoutData()
 
     return (
         <ThemeProvider>
