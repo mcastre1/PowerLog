@@ -17,6 +17,7 @@ export default function History() {
     console.log(workoutPRs);
   }, [workoutPRs]);
 
+  // Loads all workouts from async storage, and only keeps track of unique max exercises.
   async function loadWorkouts() {
     const keys = await AsyncStorage.getAllKeys();
     const workoutKeys = keys.filter(key => key.startsWith('workout:'));
@@ -46,6 +47,7 @@ export default function History() {
 
   const { theme } = useTheme(); // Get the current theme (light or dark) from the ThemeContext.
 
+  // Returns a list of text items with name and max weigth used on for a given exercise.
   return <>
     <View style={{ flex: 1, backgroundColor: theme.colors.background, justifyContent: 'center', alignItems: 'center' }}>
       {
