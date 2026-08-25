@@ -51,7 +51,10 @@ export const upperBodyExercises = {
     "Decline Dumbbell Bench Press",
     "Dumbbell Flyes (Flat)",
     "Dumbbell Flyes (Incline)",
-    "Dumbbell Pullover"
+    "Dumbbell Pullover",
+    "Standing Cable Press (Straight)",
+    "Standing Cable Press (Updwards)",
+    "Standing Cable Press (Downwards)"
   ],
 
   back: [
