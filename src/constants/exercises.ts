@@ -13,7 +13,8 @@ export const lowerBodyExercises = {
     "Barbell Hack Squat",
     "Squat Machine (Standard)",
     "Squat Machine (Narrow Stance)",
-    "Squat Machine (Wide Stance)"
+    "Squat Machine (Wide Stance)",
+    "Leg Extensions"
   ],
 
   hamstrings: [
@@ -31,7 +32,10 @@ export const lowerBodyExercises = {
     "Dumbbell Step-Ups",
     "Dumbbell Lunges (Forward)",
     "Dumbbell Lunges (Reverse)",
-    "Dumbbell Lunges (Walking)"
+    "Dumbbell Lunges (Walking)",
+    "Cable Hip Adduction (In)",
+    "Cable Hip Abduction (Out)",
+    "Cable Glute Kickback"
   ],
 
   calves: [
@@ -64,28 +68,35 @@ export const upperBodyExercises = {
     "Chest-Supported Dumbbell Row",
     "Barbell Shrugs",
     "Dumbbell Shrugs",
-    "Barbell Deadlift",
-    "Romanian Deadlift"
+    "Barbell Deadlift (Back)",
+    "Romanian Deadlift (Back)",
+    "Seated Cable Lat PullDowns",
+    "Seated Cable Row"
   ],
 
   shoulders: [
     "Barbell Overhead Press",
     "Dumbbell Shoulder Press",
+    "Barbell Shoulder Press",
     "Arnold Press",
     "Dumbbell Lateral Raise",
     "Dumbbell Front Raise",
     "Dumbbell Rear Delt Fly",
     "Barbell Upright Row",
-    "Dumbbell Upright Row"
+    "Dumbbell Upright Row",
+    "Cable Lateral Raise",
+    "Cable Front Raise"
   ],
 
   biceps: [
     "Barbell Curl",
     "EZ-Bar Curl",
-    "Dumbbell Curl",
+    "Standing Dumbbell Curl",
+    "Seated Dumbell Curl",
     "Hammer Curl",
     "Incline Dumbbell Curl",
-    "Concentration Curl"
+    "Concentration Curl",
+    "Cable Dumbell Curl"
   ],
 
   triceps: [
@@ -93,6 +104,14 @@ export const upperBodyExercises = {
     "Dumbbell Skull Crushers",
     "Dumbbell Overhead Triceps Extension",
     "Close-Grip Barbell Bench Press",
-    "Dumbbell Kickback"
-  ]
+    "Dumbbell Kickback",
+    "Cable Triceps Pushdown (Straight Bar)",
+    "Cable Triceps Pushdown (Rope)",
+    "Cable Overhead Triceps Extension (Rope)"
+  ], 
+
+  abs:[
+    "Leg Raises",
+    "Cable Crunches"
+  ],
 };
