@@ -10,7 +10,7 @@ type Props = {
     name?: string;
 }
 
-export default function DropdownModal({ callBack, data, type, list}: Props) {
+export default function DropdownModal({ callBack, data, type, list }: Props) {
     const [open, setOpen] = useState(false);
     const sectionList = bodySection;
 
@@ -38,7 +38,7 @@ export default function DropdownModal({ callBack, data, type, list}: Props) {
                                     const [section, exercises] = item;
                                     return (
                                         <View style={{ alignItems: "center" }}>
-                                            <Text style={styles.itemText}>--- {section} ---</Text>
+                                            <Text style={styles.sectionTitle}> -- {section} -- </Text>
                                             {exercises.map(ex => <Pressable
                                                 key={ex}
                                                 style={({ pressed }) => [
@@ -83,8 +83,8 @@ export default function DropdownModal({ callBack, data, type, list}: Props) {
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flexShrink:1,
+    container: {
+        flexShrink: 1,
     },
     button: {
         flexDirection: 'row',
@@ -110,11 +110,23 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
 
     },
+    sectionTitle: {
+        fontSize: 14,
+        fontWeight: "700",
+        color: "#7a7a7a",
+        textTransform: "uppercase",
+        marginVertical: 12,
+        letterSpacing: 1,
+        alignSelf: "center",
+    },
     item: {
         padding: 14,
     },
     itemText: {
-        fontSize: 16,
+        fontSize: 13,
+        fontWeight: "500",
+        color: "#555",
+        letterSpacing: 0.3,
     },
     icon: {
         fontSize: 12,
