@@ -2,8 +2,7 @@ import { useTheme } from '@/src/constants/theme/useTheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Pressable, Text, View, } from 'react-native';
-import { FlatList } from 'react-native-reanimated/lib/typescript/Animated';
+import { FlatList, Pressable, Text, View } from 'react-native';
 
 export default function History() {
   const [workoutPRs, setWorkoutPRs] = useState<Record<string, any>>({});
