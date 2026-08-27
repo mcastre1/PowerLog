@@ -1,8 +1,9 @@
 import { useTheme } from '@/src/constants/theme/useTheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
-import { Text, View, } from 'react-native';
+import { useCallback, useState } from 'react';
+import { Pressable, Text, View, } from 'react-native';
+import { FlatList } from 'react-native-reanimated/lib/typescript/Animated';
 
 export default function History() {
   const [workoutPRs, setWorkoutPRs] = useState<Record<string, any>>({});
@@ -12,10 +13,6 @@ export default function History() {
       loadWorkouts();
     }, [])
   );
-
-  useEffect(() => {
-    console.log(workoutPRs);
-  }, [workoutPRs]);
 
   // Loads all workouts from async storage, and only keeps track of unique max exercises.
   async function loadWorkouts() {
@@ -32,10 +29,10 @@ export default function History() {
 
       const parsed = JSON.parse(exercises);
 
-      for (const exercise of parsed){
+      for (const exercise of parsed) {
         const exerciseName = exercise.name;
         const maxWeight = Math.max(...exercise.sets.map((set: any) => parseFloat(set.Weight)));
-        
+
         if (!prMap[exerciseName] || maxWeight > prMap[exerciseName]) {
           prMap[exerciseName] = maxWeight;
         }
@@ -48,13 +45,25 @@ export default function History() {
   const { theme } = useTheme(); // Get the current theme (light or dark) from the ThemeContext.
 
   // Returns a list of text items with name and max weigth used on for a given exercise.
-  return <>
+  return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background, justifyContent: 'center', alignItems: 'center' }}>
-      {
-        Object.entries(workoutPRs).map(([exerciseName, maxWeight]) => (
+      <FlatList
+        data={Object.entries(workoutPRs)} // [["Bench", {...}], ["Squat", {...}]]
+        keyExtractor={([name]) => name}
+        renderItem={({ item }) => {
+          const [name, pr] = item;
+          return (
+            <Pressable onPress={() => console.log(name)}>
+              <Text>{name}: {pr.weight} lbs</Text>
+            </Pressable>
+          );
+        }}
+      />
+
+
+      {/* Object.entries(workoutPRs).map(([exerciseName, maxWeight]) => (
           <Text key={exerciseName} style={{ color: theme.colors.text }}>{exerciseName}: {maxWeight} lbs</Text>
-        ))
-      }
+        )) */}
     </View>
-  </>
+  )
 }
