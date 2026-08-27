@@ -53,7 +53,7 @@ export default function History() {
           const [name, pr] = item;
           return (
             <Pressable onPress={() => console.log(name)}>
-              <Text>{name}: {pr.weight} lbs</Text>
+              <Text>{name}: {pr} lbs</Text>
             </Pressable>
           );
         }}
